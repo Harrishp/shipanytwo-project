@@ -44,3 +44,7 @@ data*
 debug*
 
 *.db
+
+.open-next
+wrangler.toml
+.wrangler
