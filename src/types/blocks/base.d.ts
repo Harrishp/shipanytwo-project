@@ -8,6 +8,7 @@ export interface Nav {
 export interface NavItem {
   name?: string;
   title?: string;
+  description?: string;
   url?: string;
   target?: string;
   type?: string;
@@ -34,8 +35,11 @@ export interface Image {
 
 export interface Brand {
   title?: string;
+  description?: string;
   logo?: Image;
   url?: string;
+  target?: string;
+  className?: string;
 }
 
 export interface Pagination {

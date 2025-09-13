@@ -1,5 +1,26 @@
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./config";
+import {
+  defaultLocale,
+  localeNamespaces,
+  localeRootNamespace,
+} from "@/config/locale";
+
+export async function loadMessages(
+  namespace: string = localeRootNamespace,
+  locale: string = defaultLocale
+) {
+  try {
+    const messages = await import(
+      `@/config/locale/${namespace}/${locale}.json`
+    );
+    return messages.default;
+  } catch (error) {
+    return await import(
+      `@/config/locale/${namespace}/${defaultLocale}.json`
+    ).then((module) => module.default);
+  }
+}
 
 export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale;
@@ -16,17 +37,26 @@ export default getRequestConfig(async ({ requestLocale }) => {
   }
 
   try {
-    const messages = (
-      await import(`@/config/locale/messages/${locale.toLowerCase()}.json`)
-    ).default;
+    const allMessages = await Promise.all(
+      localeNamespaces.map((namespace) => loadMessages(namespace, locale))
+    );
+    const messagesMap: any = {};
+    localeNamespaces.forEach((namespace, index) => {
+      messagesMap[namespace] = allMessages[index];
+    });
+
     return {
       locale: locale,
-      messages: messages,
+      messages: {
+        ...messagesMap,
+        ...(await loadMessages(localeRootNamespace, locale)),
+      },
     };
   } catch (e) {
+    console.log("yyy", localeRootNamespace, defaultLocale);
     return {
-      locale: "en",
-      messages: (await import(`@/config/locale/messages/en.json`)).default,
+      locale: defaultLocale,
+      messages: await loadMessages(localeRootNamespace, defaultLocale),
     };
   }
 });

@@ -2,8 +2,11 @@ import { Header, Main, MainHeader } from "@/blocks/dashboard";
 import { TableCard } from "@/blocks/table";
 import { type Table } from "@/types/blocks/table";
 import { getUsers } from "@/services/user";
+import { getTranslations } from "next-intl/server";
 
 export default async function AdminUsersPage() {
+  const t = await getTranslations("admin.users");
+
   const users = await getUsers();
   console.log(users);
   const table: Table = {
@@ -22,7 +25,7 @@ export default async function AdminUsersPage() {
     <>
       <Header />
       <Main>
-        <MainHeader title="Users" />
+        <MainHeader title={t("title")} />
         <TableCard table={table} />
       </Main>
     </>

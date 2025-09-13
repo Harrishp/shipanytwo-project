@@ -14,13 +14,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "@/core/i18n/navigation";
+import { Loader2 } from "lucide-react";
 
-export function SignUser({ isScrolled }: { isScrolled?: boolean }) {
+export function SignUser({
+  isScrolled,
+  signButtonSize = "sm",
+}: {
+  isScrolled?: boolean;
+  signButtonSize?: "default" | "sm" | "lg" | "icon";
+}) {
   const { data: session, isPending } = useSession();
   const router = useRouter();
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loader2 className="size-4 animate-spin" />
+      </div>
+    );
   }
 
   if (session && session.user) {
@@ -52,27 +63,14 @@ export function SignUser({ isScrolled }: { isScrolled?: boolean }) {
     <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
       <Button
         asChild
-        variant="outline"
-        size="sm"
-        className={cn(isScrolled && "lg:hidden")}
+        size={signButtonSize}
+        className={cn(
+          "border-foreground/10 ml-4 h-7 ring-0",
+          isScrolled && "lg:hidden"
+        )}
+        onClick={() => router.push("/sign-in")}
       >
-        <Link href="/sign-in">
-          <span>Sign In</span>
-        </Link>
-      </Button>
-      <Button asChild size="sm" className={cn(isScrolled && "lg:hidden")}>
-        <Link href={"/sign-up"}>
-          <span>Sign Up</span>
-        </Link>
-      </Button>
-      <Button
-        asChild
-        size="sm"
-        className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
-      >
-        <Link href="#">
-          <span>Get Started</span>
-        </Link>
+        <span>Sign In</span>
       </Button>
     </div>
   );

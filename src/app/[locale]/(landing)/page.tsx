@@ -13,18 +13,21 @@ import {
   FeaturesAccordion,
   FeaturesStep,
 } from "@/blocks/landing";
-import { getLandingData } from "@/services/locale";
-import { setRequestLocale } from "next-intl/server";
+import { loadMessages } from "@/core/i18n/request";
+import { Header } from "@/types/blocks/landing";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export default async function LandingPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  const t = await getTranslations("landing.header");
+
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const landingData = await getLandingData(locale);
+  const landingData = await loadMessages("landing", locale);
 
   return (
     <>

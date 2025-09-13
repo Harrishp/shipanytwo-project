@@ -1,49 +1,51 @@
-import { LandingData } from "@/services/locale";
+import { type Footer as FooterType } from "@/types/blocks/landing";
 import { Link } from "@/core/i18n/navigation";
 import Image from "next/image";
 
-export function Footer({ data }: { data: LandingData["footer"] }) {
+export function Footer({ footer }: { footer: FooterType }) {
   return (
     <footer role="contentinfo" className="py-8 sm:py-20">
       <div className="container space-y-16">
         <div className="grid gap-12 md:grid-cols-5">
           <div className="space-y-6 md:col-span-2 md:space-y-12">
-            {data.brand ? (
+            {footer.brand ? (
               <Link
-                href={data.brand.url}
+                href={footer.brand.url || ""}
                 aria-label="home"
                 className="flex items-center space-x-2"
               >
                 <Image
-                  src={data.brand.logo.src}
-                  alt={data.brand.logo.alt}
+                  src={footer.brand?.logo?.src || ""}
+                  alt={footer.brand?.logo?.alt || ""}
                   width={100}
                   height={100}
                   className="h-10 w-auto"
                 />
-                <span className="text-lg font-medium">{data.brand.title}</span>
+                <span className="text-lg font-medium">
+                  {footer.brand?.title}
+                </span>
               </Link>
             ) : null}
 
             <p className="text-muted-foreground text-balance text-sm">
-              {data.brand.description}
+              {footer.brand?.description}
             </p>
           </div>
 
           <div className="col-span-3 grid gap-6 sm:grid-cols-3">
-            {data.nav.items.map((link, index) => (
+            {footer.nav?.items.map((link, index) => (
               <div key={index} className="space-y-4 text-sm">
                 <span className="block font-medium">{link.title}</span>
 
                 <div className="flex flex-wrap gap-4 sm:flex-col">
-                  {link.children.map((item, index) => (
+                  {link.children?.map((item, index) => (
                     <Link
                       key={index}
-                      href={item.url}
-                      target={item.target}
+                      href={item.url || ""}
+                      target={item.target || ""}
                       className="text-muted-foreground hover:text-primary block duration-150"
                     >
-                      <span>{item.title}</span>
+                      <span>{item.title || ""}</span>
                     </Link>
                   ))}
                 </div>
@@ -57,7 +59,8 @@ export function Footer({ data }: { data: LandingData["footer"] }) {
         />
         <div className="flex flex-wrap justify-between gap-4">
           <span className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Tailark, All rights reserved{" "}
+            © {new Date().getFullYear()} {footer.brand?.title || ""}, All rights
+            reserved{" "}
           </span>
 
           <div className="ring-foreground/5 bg-card flex items-center gap-2 rounded-full border border-transparent py-1 pl-2 pr-4 shadow ring-1">

@@ -49,7 +49,7 @@ export function Hero({ data }: { data: LandingData["hero"] }) {
         <div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
       </div>
       <section>
-        <div className="relative pt-24 md:pt-36">
+        <div className="relative pt-12 md:pt-16">
           {/* <AnimatedGroup
             variants={{
               container: {
@@ -226,7 +226,7 @@ export function Hero({ data }: { data: LandingData["hero"] }) {
         <Particles />
       </div>
 
-      <div className="absolute top-96 inset-0 overflow-hidden h-[500px] w-full">
+      <div className="absolute top-48 inset-0 overflow-hidden h-[500px] w-full">
         <Ripple />
       </div>
     </main>

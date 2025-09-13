@@ -1,6 +1,4 @@
 {
-  "template": "shipany-template-one",
-  "theme": "light",
   "header": {
     "brand": {
       "title": "ShipAny",
@@ -15,7 +13,7 @@
         {
           "title": "Features",
           "url": "/#features",
-          "icon": "RiSparkling2Line"
+          "icon": "RiHomeLine"
         },
         {
           "title": "Pricing",
@@ -23,9 +21,20 @@
           "icon": "RiMoneyDollarCircleLine"
         },
         {
-          "title": "Showcases",
-          "url": "/showcases",
-          "icon": "RiApps2Line"
+          "title": "Demo",
+          "icon": "RiApps2Line",
+          "children": [
+            {
+              "title": "Chatbot",
+              "url": "/demo/chatbot",
+              "icon": "RiApps2Line"
+            },
+            {
+              "title": "Image Generator",
+              "url": "/demo/image-generator",
+              "icon": "RiApps2Line"
+            }
+          ]
         },
         {
           "title": "Blog",
