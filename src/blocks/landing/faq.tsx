@@ -1,59 +1,52 @@
-"use client";
-
 import {
   Accordion,
+  AccordionTrigger,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
 } from "@/components/ui/accordion";
-import Link from "next/link";
-import { LandingData } from "@/services/locale";
+import { FAQ as FAQType } from "@/types/blocks/landing";
 
-export function FAQ({ data }: { data: LandingData["faq"] }) {
-  if (!data) {
-    return null;
-  }
-
+export function FAQ({ faq, className }: { faq: FAQType; className?: string }) {
   return (
-    <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-balance text-3xl font-bold md:text-4xl lg:text-5xl">
-            {data.title}
+    <section id={faq.id} className={`py-16 md:py-24 ${className}`}>
+      <div className={`max-w-full md:max-w-3xl mx-auto`}>
+        <div className="mx-auto max-w-2xl text-balance text-center">
+          <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
+            {faq.title}
           </h2>
-          <p className="text-muted-foreground mt-4 text-balance">
-            {data.description}
+          <p className="text-muted-foreground mb-6 md:mb-12 lg:mb-16">
+            {faq.description}
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-3xl">
+        <div className="mx-auto mt-12 max-w-full">
           <Accordion
             type="single"
             collapsible
-            className="bg-card ring-muted w-full rounded-2xl border px-8 py-3 shadow-sm ring-4 dark:ring-0"
+            className="bg-muted dark:bg-muted/50 w-full rounded-2xl p-1"
           >
-            {data.items.map((item) => (
-              <AccordionItem
-                key={item.question}
-                value={item.question}
-                className="border-dashed"
-              >
-                <AccordionTrigger className="cursor-pointer text-base hover:no-underline">
-                  {item.question}
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="text-base">{item.answer}</p>
-                </AccordionContent>
-              </AccordionItem>
+            {faq.items?.map((item, idx) => (
+              <div className="group" key={idx}>
+                <AccordionItem
+                  value={item.question ?? ""}
+                  className="data-[state=open]:bg-card dark:data-[state=open]:bg-muted peer rounded-xl border-none px-7 py-1 data-[state=open]:border-none data-[state=open]:shadow-sm"
+                >
+                  <AccordionTrigger className="cursor-pointer text-base hover:no-underline">
+                    {item.question ?? ""}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-base">{item.answer ?? ""}</p>
+                  </AccordionContent>
+                </AccordionItem>
+                <hr className="mx-7 border-dashed group-last:hidden peer-data-[state=open]:opacity-0" />
+              </div>
             ))}
           </Accordion>
 
-          <p className="text-muted-foreground mt-6 px-8">
-            Can't find what you're looking for? Contact our{" "}
-            <Link href="/" className="text-primary font-medium hover:underline">
-              customer support team
-            </Link>
-          </p>
+          <p
+            className="text-muted-foreground mt-6 px-8"
+            dangerouslySetInnerHTML={{ __html: faq.tip ?? "" }}
+          />
         </div>
       </div>
     </section>

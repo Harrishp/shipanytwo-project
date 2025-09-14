@@ -1,46 +1,46 @@
 "use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  ChartBarIncreasingIcon,
-  Database,
-  Fingerprint,
-  IdCard,
-} from "lucide-react";
-import Image from "next/image";
-import { useState } from "react";
+import { Database } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { BorderBeam } from "@/components/magicui/border-beam";
-import { LandingData } from "@/services/locale";
+import { Features as FeaturesType } from "@/types/blocks/landing";
 
-export function FeaturesAccordion({ data }: { data: LandingData["features"] }) {
-  if (!data) {
-    return null;
-  }
-
+export function FeaturesAccordion({
+  features,
+  className,
+}: {
+  features: FeaturesType;
+  className?: string;
+}) {
   const [activeItem, setActiveItem] = useState<string>("item-1");
 
   const images: any = {};
-  data.items.forEach((item, idx) => {
+  features.items?.forEach((item, idx) => {
     images[`item-${idx + 1}`] = {
-      image: item.img_url,
-      alt: item.title,
+      image: item.image?.src ?? "",
+      alt: item.image?.alt || item.title || "",
     };
   });
 
   return (
-    <section className="py-12 md:py-20 lg:py-32">
+    <section className={`py-16 md:py-24 ${className}`}>
       <div className="bg-linear-to-b absolute inset-0 -z-10 sm:inset-6 sm:rounded-b-3xl dark:block dark:to-[color-mix(in_oklab,var(--color-zinc-900)_75%,var(--color-background))]"></div>
       <div className="container space-y-8 px-6 md:space-y-16 lg:space-y-20 dark:[--color-border:color-mix(in_oklab,var(--color-white)_10%,transparent)]">
-        <div className="relative z-10 mx-auto max-w-2xl space-y-6 text-center">
-          <h2 className="text-balance text-4xl font-semibold lg:text-6xl">
-            {data.title}
+        <div className="mx-auto max-w-4xl text-balance text-center">
+          <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
+            {features.title}
           </h2>
-          <p>{data.description}</p>
+          <p className="text-muted-foreground mb-6 md:mb-12 lg:mb-16">
+            {features.description}
+          </p>
         </div>
 
         <div className="grid gap-12 sm:px-12 md:grid-cols-2 lg:gap-20 lg:px-0">
@@ -50,7 +50,7 @@ export function FeaturesAccordion({ data }: { data: LandingData["features"] }) {
             onValueChange={(value) => setActiveItem(value as string)}
             className="w-full"
           >
-            {data.items.map((item, idx) => (
+            {features.items?.map((item, idx) => (
               <AccordionItem value={`item-${idx + 1}`} key={idx}>
                 <AccordionTrigger>
                   <div className="flex items-center gap-2 text-base">

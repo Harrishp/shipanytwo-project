@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Link } from "@/core/i18n/navigation";
 import Image from "next/image";
-import { Brand } from "@/types/blocks/base";
+import { Brand } from "@/types/blocks/common";
 
 export function SidebarHeader({ brand }: { brand: Brand }) {
   return (

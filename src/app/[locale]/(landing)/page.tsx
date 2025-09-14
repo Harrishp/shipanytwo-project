@@ -1,20 +1,17 @@
 import {
-  Hero,
   Stats,
-  Showcases,
-  Pricing,
   FAQ,
-  Testimonials,
   CTA,
   Features,
   Logos,
-  FeaturesGrid,
-  FeaturesList,
-  FeaturesAccordion,
+  Hero,
+  Testimonials,
   FeaturesStep,
+  FeaturesAccordion,
+  FeaturesGrid,
+  Showcases,
+  FeaturesList,
 } from "@/blocks/landing";
-import { loadMessages } from "@/core/i18n/request";
-import { Header } from "@/types/blocks/landing";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export default async function LandingPage({
@@ -22,33 +19,24 @@ export default async function LandingPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const t = await getTranslations("landing.header");
-
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const landingData = await loadMessages("landing", locale);
+  const t = await getTranslations("landing");
 
   return (
     <>
-      {landingData.hero && <Hero data={landingData.hero} />}
-      {landingData.logos && <Logos data={landingData.logos} />}
-
-      {/* {landingData.showcases && <Showcases data={landingData.showcases} />} */}
-      {landingData.introduce && <FeaturesList data={landingData.introduce} />}
-      {landingData.benefit && <FeaturesAccordion data={landingData.benefit} />}
-      {landingData.usage && <FeaturesStep data={landingData.usage} />}
-      {landingData.features && <Features data={landingData.features} />}
-
-      {/* {landingData.introduce && <FeaturesGrid />} */}
-
-      <Pricing />
-      {landingData.faq && <FAQ data={landingData.faq} />}
-      {landingData.testimonials && (
-        <Testimonials data={landingData.testimonials} />
-      )}
-      <Stats />
-      <CTA />
+      <Hero hero={t.raw("hero")} />
+      <Logos logos={t.raw("logos")} />
+      <FeaturesList features={t.raw("introduce")} />
+      <FeaturesAccordion features={t.raw("benefits")} />
+      <FeaturesStep features={t.raw("usage")} />
+      <Features features={t.raw("features")} />
+      <Stats stats={t.raw("stats")} className="bg-muted" />
+      <Showcases showcases={t.raw("showcases")} />
+      <FAQ faq={t.raw("faq")} />
+      <Testimonials testimonials={t.raw("testimonials")} />
+      <CTA cta={t.raw("cta")} className="bg-muted" />
     </>
   );
 }

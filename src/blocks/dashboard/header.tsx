@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { ThemeToggler, LocaleSelector } from "@/blocks/base";
+import { ThemeToggler, LocaleSelector } from "@/blocks/common";
 
 export function Header({ title }: { title?: string }) {
   return (

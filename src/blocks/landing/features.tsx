@@ -1,88 +1,34 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
-import * as React from "react";
-import {
-  Gemini,
-  Replit,
-  MagicUI,
-  VSCodium,
-  MediaWiki,
-  GooglePaLM,
-} from "@/components/logos";
-import { LandingData } from "@/services/locale";
+import { SmartIcon } from "@/blocks/common/smart-icon";
+import { Features as FeaturesProps } from "@/types/blocks/landing";
 
-export function Features({ data }: { data: LandingData["features"] }) {
-  if (!data) {
-    return null;
-  }
-
+export function Features({ features }: { features: FeaturesProps }) {
   return (
-    <section>
-      <div className="py-32">
-        <div className="container">
-          <div className="text-center">
-            <h2 className="text-balance text-3xl font-semibold md:text-4xl">
-              {data.title}
-            </h2>
-            <p className="text-muted-foreground mt-6">{data.description}</p>
-          </div>
+    <section
+      id={features.id}
+      className={`py-16 md:py-24 ${features.className}`}
+    >
+      <div className={`container space-y-8 md:space-y-16`}>
+        <div className="mx-auto max-w-4xl text-balance text-center">
+          <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
+            {features.title}
+          </h2>
+          <p className="text-muted-foreground mb-6 md:mb-12 lg:mb-16">
+            {features.description}
+          </p>
+        </div>
 
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {data.items.map((item, idx) => (
-              <IntegrationCard
-                key={idx}
-                title={item.title}
-                description={item.description}
-              >
-                <Gemini />
-              </IntegrationCard>
-            ))}
-          </div>
+        <div className="relative mx-auto grid divide-x divide-y border *:p-12 sm:grid-cols-2 lg:grid-cols-3">
+          {features.items?.map((item, idx) => (
+            <div className="space-y-3" key={idx}>
+              <div className="flex items-center gap-2">
+                <SmartIcon name={item.icon as string} size={24} />
+                <h3 className="text-sm font-medium">{item.title}</h3>
+              </div>
+              <p className="text-sm">{item.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
-
-const IntegrationCard = ({
-  title,
-  description,
-  children,
-  link = "https://github.com/meschacirung/cnblocks",
-}: {
-  title: string;
-  description: string;
-  children: React.ReactNode;
-  link?: string;
-}) => {
-  return (
-    <Card className="p-6">
-      <div className="relative">
-        <div className="*:size-10">{children}</div>
-
-        <div className="space-y-2 py-6">
-          <h3 className="text-base font-medium">{title}</h3>
-          <p className="text-muted-foreground line-clamp-2 text-sm">
-            {description}
-          </p>
-        </div>
-
-        {/* <div className="flex gap-3 border-t border-dashed pt-6">
-          <Button
-            asChild
-            variant="secondary"
-            size="sm"
-            className="gap-1 pr-2 shadow-none"
-          >
-            <Link href={link}>
-              Learn More
-              <ChevronRight className="ml-0 !size-3.5 opacity-50" />
-            </Link>
-          </Button>
-        </div> */}
-      </div>
-    </Card>
-  );
-};

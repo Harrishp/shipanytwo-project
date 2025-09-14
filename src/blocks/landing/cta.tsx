@@ -1,28 +1,35 @@
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/core/i18n/navigation";
+import { SmartIcon } from "@/blocks/common/smart-icon";
+import { CTA as CTAType } from "@/types/blocks/landing";
 
-export function CTA() {
+export function CTA({ cta, className }: { cta: CTAType; className?: string }) {
   return (
-    <section className="py-16 md:py-32">
-      <div className="mx-auto max-w-5xl px-6">
+    <section id={cta.id} className={`py-16 md:py-24 ${className}`}>
+      <div className="container">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
-            Start Building
+            {cta.title}
           </h2>
-          <p className="mt-4">Libero sapiente aliquam quibusdam aspernatur.</p>
+          <p
+            className="mt-4"
+            dangerouslySetInnerHTML={{ __html: cta.description ?? "" }}
+          />
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <Button asChild size="lg">
-              <Link href="/">
-                <span>Get Started</span>
-              </Link>
-            </Button>
-
-            <Button asChild size="lg" variant="outline">
-              <Link href="/">
-                <span>Book Demo</span>
-              </Link>
-            </Button>
+            {cta.buttons?.map((button, idx) => (
+              <Button
+                asChild
+                size={button.size || "default"}
+                variant={button.variant || "default"}
+                key={idx}
+              >
+                <Link href={button.url || ""} target={button.target || "_self"}>
+                  {button.icon && <SmartIcon name={button.icon as string} />}
+                  <span>{button.title}</span>
+                </Link>
+              </Button>
+            ))}
           </div>
         </div>
       </div>

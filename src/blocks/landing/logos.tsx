@@ -1,108 +1,29 @@
-"use client";
-import { Beacon } from "@/components/logos/beacon";
-import { Bolt } from "@/components/logos/bolt";
-import { Cisco } from "@/components/logos/cisco";
-import { Hulu } from "@/components/logos/hulu";
-import { OpenAIFull } from "@/components/logos/open-ai";
-import { Primevideo } from "@/components/logos/prime";
-import { Stripe } from "@/components/logos/stripe";
-import { Supabase } from "@/components/logos/supabase";
-import { Polars } from "@/components/logos/polars";
-import { AnimatePresence, motion } from "motion/react";
-import React, { useEffect, useState } from "react";
-import { VercelFull } from "@/components/logos/vercel";
-import { Spotify } from "@/components/logos/spotify";
-import { PayPal } from "@/components/logos/paypal";
-import { LeapWallet } from "@/components/logos/leap-wallet";
-import { LandingData } from "@/services/locale";
+import { Logos as LogosType } from "@/types/blocks/landing";
 
-const aiLogos: React.ReactNode[] = [
-  <OpenAIFull height={24} width="auto" />,
-  <Bolt height={20} width="auto" />,
-  <Cisco height={32} width="auto" />,
-  <Hulu height={22} width="auto" />,
-  <Spotify height={24} width="auto" />,
-];
-
-const hostingLogos: React.ReactNode[] = [
-  <Supabase height={24} width="auto" />,
-  <Cisco height={32} width="auto" />,
-  <Hulu height={22} width="auto" />,
-  <Spotify height={24} width="auto" />,
-  <VercelFull height={20} width="auto" />,
-];
-
-const paymentsLogos: React.ReactNode[] = [
-  <Stripe height={24} width="auto" />,
-  <PayPal height={24} width="auto" />,
-  <LeapWallet height={24} width="auto" />,
-  <Beacon height={20} width="auto" />,
-  <Polars height={24} width="auto" />,
-];
-
-const streamingLogos: React.ReactNode[] = [
-  <Primevideo height={28} width="auto" />,
-  <Hulu height={22} width="auto" />,
-  <Spotify height={24} width="auto" />,
-  <Cisco height={32} width="auto" />,
-  <Beacon height={20} width="auto" />,
-];
-
-const logos: Record<
-  "ai" | "hosting" | "streaming" | "payments",
-  React.ReactNode[]
-> = {
-  ai: aiLogos,
-  hosting: hostingLogos,
-  payments: paymentsLogos,
-  streaming: streamingLogos,
-};
-
-type LogoGroup = keyof typeof logos;
-
-export function Logos({ data }: { data: LandingData["logos"] }) {
-  const [currentGroup, setCurrentGroup] = useState<LogoGroup>("ai");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentGroup((prev) => {
-        const groups = Object.keys(logos) as LogoGroup[];
-        const currentIndex = groups.indexOf(prev);
-        const nextIndex = (currentIndex + 1) % groups.length;
-        return groups[nextIndex];
-      });
-    }, 2500);
-
-    return () => clearInterval(interval);
-  }, []);
-
+export function Logos({
+  logos,
+  className,
+}: {
+  logos: LogosType;
+  className?: string;
+}) {
   return (
-    <section data-theme="dark" className="bg-background py-16">
-      <div className="mx-auto max-w-5xl px-6">
-        <div className="mx-auto mb-12 max-w-xl text-balance text-center md:mb-16">
-          {/* <h2 className="text-4xl font-semibold">{data.title}</h2> */}
-          <p
-            data-current={currentGroup}
-            className="text-muted-foreground mt-4 text-lg"
-          >
-            {data.title}
-          </p>
-        </div>
-        <div className="perspective-dramatic mx-auto grid max-w-5xl grid-cols-3 items-center gap-8 md:h-10 md:grid-cols-5">
-          <AnimatePresence initial={false} mode="popLayout">
-            {logos[currentGroup].map((logo, i) => (
-              <motion.div
-                key={`${currentGroup}-${i}`}
-                className="**:fill-foreground! flex items-center justify-center"
-                initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -24, filter: "blur(6px)", scale: 0.5 }}
-                transition={{ delay: i * 0.05, duration: 0.4 }}
-              >
-                {logo}
-              </motion.div>
-            ))}
-          </AnimatePresence>
+    <section className={`bg-background py-16 ${logos.className} ${className}`}>
+      <div className={`mx-auto max-w-5xl px-6`}>
+        <p className="text-center text-muted-foreground text-md font-medium">
+          {logos.title}
+        </p>
+        <div className="mx-auto mt-12 flex max-w-4xl flex-wrap items-center justify-center gap-x-12 gap-y-8 sm:gap-x-16 sm:gap-y-12">
+          {logos.items?.map((item, idx) => (
+            <img
+              key={idx}
+              className="h-8 w-fit dark:invert"
+              src={item.image?.src ?? ""}
+              alt={item.image?.alt ?? ""}
+              height="20"
+              width="auto"
+            />
+          ))}
         </div>
       </div>
     </section>

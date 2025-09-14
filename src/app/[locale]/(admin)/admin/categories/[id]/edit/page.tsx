@@ -2,16 +2,11 @@ import { Header, Main, MainHeader } from "@/blocks/dashboard";
 import { FormCard } from "@/blocks/form";
 import { Form } from "@/types/blocks/form";
 import {
-  addTaxonomy,
-  findCategory,
   findTaxonomy,
-  NewTaxonomy,
   TaxonomyStatus,
-  TaxonomyType,
   updateTaxonomy,
   UpdateTaxonomy,
 } from "@/services/taxonomy";
-import { getUuid } from "@/lib/hash";
 import { getUserInfo } from "@/services/user";
 
 export default async function CategoryEditPage({
@@ -21,7 +16,7 @@ export default async function CategoryEditPage({
 }) {
   const { id } = await params;
 
-  const category = await findCategory({ id });
+  const category = await findTaxonomy({ id });
   if (!category) {
     return "Category not found";
   }
@@ -64,7 +59,7 @@ export default async function CategoryEditPage({
     data: category,
     submit: {
       button: {
-        text: "Edit Category",
+        title: "Edit Category",
       },
       handler: async (data, passby) => {
         "use server";

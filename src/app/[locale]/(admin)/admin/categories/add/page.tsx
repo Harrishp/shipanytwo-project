@@ -11,6 +11,11 @@ import { getUuid } from "@/lib/hash";
 import { getUserInfo } from "@/services/user";
 
 export default async function CategoryAddPage() {
+  const user = await getUserInfo();
+  if (!user) {
+    return "no auth";
+  }
+
   const form: Form = {
     fields: [
       {
@@ -34,16 +39,17 @@ export default async function CategoryAddPage() {
     ],
     passby: {
       type: "category",
+      user: user,
     },
     data: {},
     submit: {
       button: {
-        text: "Add Category",
+        title: "Add Category",
       },
       handler: async (data, passby) => {
         "use server";
 
-        const user = await getUserInfo();
+        const { user } = passby;
         if (!user) {
           throw new Error("no auth");
         }

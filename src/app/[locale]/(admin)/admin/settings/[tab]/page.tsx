@@ -1,6 +1,6 @@
 import { Header, Main, MainHeader } from "@/blocks/dashboard";
 import { FormCard } from "@/blocks/form";
-import { NavItem } from "@/types/blocks/base";
+import { NavItem } from "@/types/blocks/common";
 import { Form as FormType } from "@/types/blocks/form";
 import { saveConfigs } from "@/services/config";
 import { getConfigs } from "@/services/config";
@@ -217,7 +217,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -247,7 +247,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -285,7 +285,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -310,7 +310,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -341,7 +341,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -398,7 +398,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -423,7 +423,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -448,7 +448,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -472,7 +472,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },
@@ -496,7 +496,7 @@ export default async function SettingsPage({
       },
       submit: {
         button: {
-          text: "Save",
+          title: "Save",
         },
         handler: handleSubmit as any,
       },

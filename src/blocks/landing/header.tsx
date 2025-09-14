@@ -1,9 +1,8 @@
 "use client";
 
-import { Link } from "@/core/i18n/navigation";
-import { LogoIcon } from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "@/core/i18n/navigation";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,7 +10,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Menu, X } from "lucide-react";
 import { useMedia } from "@/hooks/use-media";
@@ -22,27 +20,104 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "motion/react";
-import { type Header as HeaderType } from "@/types/blocks/landing";
-import { Logo as LogoComponent } from "./brand";
-import { NavItem } from "@/types/blocks/base";
-import { Icon } from "@/blocks/base/icon";
-import Image from "next/image";
-import { SignUser } from "./sign-user";
-import { LocaleSelector, ThemeToggler } from "../base";
+import {
+  SmartIcon,
+  BrandLogo,
+  ThemeToggler,
+  LocaleSelector,
+  SignUser,
+} from "@/blocks/common";
+import { Header as HeaderType } from "@/types/blocks/landing";
+import { NavItem } from "@/types/blocks/common";
 
 export function Header({ header }: { header: HeaderType }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isLarge = useMedia("(min-width: 64rem)");
   const [isScrolled, setIsScrolled] = useState(false);
+  const isLarge = useMedia("(min-width: 64rem)");
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 75);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const NavMenu = () => {
+    const menuRef = useRef<React.ElementRef<typeof NavigationMenu>>(null);
+
+    const handleViewportHeight = () => {
+      requestAnimationFrame(() => {
+        const menuNode = menuRef.current;
+        if (!menuNode) return;
+
+        const openContent = document.querySelector<HTMLElement>(
+          '[data-slot="navigation-menu-viewport"][data-state="open"]'
+        );
+
+        if (openContent) {
+          const height = openContent.scrollHeight;
+          document.documentElement.style.setProperty(
+            "--navigation-menu-viewport-height",
+            `${height}px`
+          );
+        } else {
+          document.documentElement.style.removeProperty(
+            "--navigation-menu-viewport-height"
+          );
+        }
+      });
+    };
+
+    return (
+      <NavigationMenu
+        ref={menuRef}
+        onValueChange={handleViewportHeight}
+        className="**:data-[slot=navigation-menu-viewport]:bg-transparent **:data-[slot=navigation-menu-viewport]:rounded-none **:data-[slot=navigation-menu-viewport]:ring-0 **:data-[slot=navigation-menu-viewport]:border-0 **:data-[slot=navigation-menu-viewport]:shadow-none [--color-muted:color-mix(in_oklch,var(--color-foreground)_5%,transparent)] [--viewport-outer-px:2rem] max-lg:hidden"
+      >
+        <NavigationMenuList className="gap-3">
+          {header.nav?.items?.map((item, idx) => (
+            <NavigationMenuItem key={idx} value={item.title || ""}>
+              {item.children && item.children.length > 0 ? (
+                <>
+                  <NavigationMenuTrigger>{item.title}</NavigationMenuTrigger>
+                  <NavigationMenuContent className="mt-4.5 origin-top pb-14 pt-5 shadow-none ring-0">
+                    <div className="min-w-6xl pr-22 divide-foreground/10 grid w-full grid-cols-4 gap-4 divide-x">
+                      <div className="col-span-2 row-span-2 grid grid-rows-subgrid gap-1 border-r-0">
+                        <span className="text-muted-foreground ml-2 text-xs">
+                          {item.title}
+                        </span>
+                        <ul className="mt-1 grid grid-cols-2 gap-2">
+                          {item.children?.map((subItem: NavItem, iidx) => (
+                            <ListItem
+                              key={iidx}
+                              href={subItem.url || ""}
+                              title={subItem.title || ""}
+                              description={subItem.description || ""}
+                            >
+                              {subItem.icon && (
+                                <SmartIcon name={subItem.icon as string} />
+                              )}
+                            </ListItem>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </NavigationMenuContent>
+                </>
+              ) : (
+                <NavigationMenuLink asChild>
+                  <Link href={item.url || ""} target={item.target || "_self"}>
+                    {item.title}
+                  </Link>
+                </NavigationMenuLink>
+              )}
+            </NavigationMenuItem>
+          ))}
+        </NavigationMenuList>
+      </NavigationMenu>
+    );
+  };
 
   const MobileMenu = ({ closeMenu }: { closeMenu: () => void }) => {
     return (
@@ -55,120 +130,56 @@ export function Header({ header }: { header: HeaderType }) {
           collapsible
           className="**:hover:no-underline -mx-4 mt-0.5 space-y-0.5"
         >
-          {header.nav?.items?.map((item: NavItem, index) => {
-            if (item.children && item.children.length > 0) {
-              return (
-                <AccordionItem
-                  key={index}
-                  value={item.title || ""}
-                  className="before:border-border group relative border-b-0 before:pointer-events-none before:absolute before:inset-x-4 before:bottom-0 before:border-b"
-                >
-                  <AccordionTrigger className="**:!font-normal data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg">
-                    {item.title || ""}
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-5">
-                    <ul>
-                      {item.children.map((subItem: NavItem, featureIndex) => (
-                        <li key={featureIndex}>
-                          <Link
-                            href={subItem.url || ""}
-                            target={subItem.target || "_self"}
-                            onClick={closeMenu}
-                            className="grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2"
-                          >
-                            <div
-                              aria-hidden
-                              className="flex items-center justify-center *:size-4"
-                            >
-                              {subItem.icon && (
-                                <Icon name={subItem.icon as string} />
-                              )}
-                            </div>
-                            <div className="text-base">
-                              {subItem.name || subItem.title || ""}
-                            </div>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-              );
-            }
-            return null;
-          })}
-        </Accordion>
-        {header.nav?.items?.map((item: NavItem, index) => {
-          return (
-            <Link
-              key={index}
-              href={item.url || ""}
-              onClick={closeMenu}
-              className="group relative block border-0 border-b py-4 text-lg"
-            >
-              {item.name || item.title || ""}
-            </Link>
-          );
-        })}
-      </nav>
-    );
-  };
-
-  const NavMenu = () => {
-    return (
-      <NavigationMenu className="**:data-[slot=navigation-menu-viewport]:left-8 **:data-[slot=navigation-menu-viewport]:top-3 max-lg:hidden">
-        <NavigationMenuList className="gap-3">
-          {header.nav?.items?.map((item: NavItem) => {
+          {header.nav?.items?.map((item, idx) => {
             return (
-              <NavigationMenuItem key={item.name || item.title || ""}>
+              <AccordionItem
+                key={idx}
+                value={item.title || ""}
+                className="group relative border-b-0 before:pointer-events-none before:absolute before:inset-x-4 before:bottom-0 before:border-b"
+              >
                 {item.children && item.children.length > 0 ? (
-                  <NavigationMenuTrigger>
-                    <Icon name={item.icon as string} className="w-4 h-4 mr-2" />
-                    {item.title}
-                  </NavigationMenuTrigger>
-                ) : (
-                  <NavigationMenuLink
-                    asChild
-                    className={navigationMenuTriggerStyle({
-                      className: "text-foreground/75 h-7 px-3 text-sm",
-                    })}
-                  >
-                    <Link
-                      href={item.url || ""}
-                      target={item.target || "_self"}
-                      className=""
-                    >
+                  <>
+                    <AccordionTrigger className="**:!font-normal data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg">
                       {item.title}
-                    </Link>
-                  </NavigationMenuLink>
-                )}
-                {item.children && item.children.length > 0 && (
-                  <NavigationMenuContent className="p-0.5">
-                    <div className="w-80 pr-[1.5px]">
-                      <div className="bg-card ring-foreground/5 rounded-[calc(var(--radius)-2px)] border border-transparent p-2 shadow ring-1">
-                        <ul className="mt-1 space-y-2">
-                          {item.children.map((subItem: NavItem, index) => (
-                            <ListItem
-                              key={index}
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-5">
+                      <ul>
+                        {item.children?.map((subItem: NavItem, iidx) => (
+                          <li key={iidx}>
+                            <Link
                               href={subItem.url || ""}
-                              title={subItem.title || ""}
-                              description={subItem.description || ""}
+                              onClick={closeMenu}
+                              className="grid grid-cols-[auto_1fr] items-center gap-2.5 px-4 py-2"
                             >
-                              {subItem.icon && (
-                                <Icon name={subItem.icon as string} />
-                              )}
-                            </ListItem>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </NavigationMenuContent>
+                              <div
+                                aria-hidden
+                                className="flex items-center justify-center *:size-4"
+                              >
+                                {subItem.icon && (
+                                  <SmartIcon name={subItem.icon as string} />
+                                )}
+                              </div>
+                              <div className="text-base">{subItem.title}</div>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </>
+                ) : (
+                  <Link
+                    href={item.url || ""}
+                    onClick={closeMenu}
+                    className="**:!font-normal data-[state=open]:bg-muted flex items-center justify-between px-4 py-3 text-lg"
+                  >
+                    {item.title}
+                  </Link>
                 )}
-              </NavigationMenuItem>
+              </AccordionItem>
             );
           })}
-        </NavigationMenuList>
-      </NavigationMenu>
+        </Accordion>
+      </nav>
     );
   };
 
@@ -187,16 +198,14 @@ export function Header({ header }: { header: HeaderType }) {
       <li {...props}>
         <NavigationMenuLink asChild>
           <Link href={href} className="grid grid-cols-[auto_1fr] gap-3.5">
-            <div className="bg-background ring-foreground/10 before:mask-y-from-80% after:mask-x-from-80% before:border-foreground/[0.075] after:border-foreground/[0.075] relative flex size-10 items-center justify-center rounded border border-transparent shadow shadow-sm ring-1 before:absolute before:-inset-x-1 before:-inset-y-3 before:border-x before:border-dashed after:absolute after:-inset-x-3 after:-inset-y-1 after:border-y after:border-dashed">
+            <div className="bg-background ring-foreground/10 relative flex size-9 items-center justify-center rounded border border-transparent shadow shadow-sm ring-1">
               {children}
             </div>
             <div className="space-y-0.5">
               <div className="text-foreground text-sm font-medium">{title}</div>
-              {description && (
-                <p className="text-muted-foreground line-clamp-1 text-xs">
-                  {description}
-                </p>
-              )}
+              <p className="text-muted-foreground line-clamp-1 text-xs">
+                {description}
+              </p>
             </div>
           </Link>
         </NavigationMenuLink>
@@ -207,26 +216,28 @@ export function Header({ header }: { header: HeaderType }) {
   return (
     <>
       <header
-        role="banner"
-        data-theme="dark"
-        {...(isScrolled && { "data-scrolled": true })}
         data-state={isMobileMenuOpen ? "active" : "inactive"}
-        className="bg-background [--color-popover:color-mix(in_oklch,var(--color-muted)_25%,var(--color-background))]"
+        {...(isScrolled && { "data-scrolled": true })}
+        className="has-data-[state=open]:h-screen has-data-[state=open]:backdrop-blur has-data-[state=open]:bg-background/50 fixed inset-x-0 top-0 z-50"
       >
         <div
           className={cn(
-            "relative",
-            "not-in-data-scrolled:has-data-[state=open]:[--viewport-translate:-4rem]",
-            !isLarge &&
-              "in-data-scrolled:border-b in-data-scrolled:border-foreground/5 in-data-scrolled:backdrop-blur in-data-scrolled:bg-card/50 fixed inset-x-0 top-0 z-50 h-16 overflow-hidden",
-            "max-lg:in-data-[state=active]:bg-card/50 max-lg:in-data-[state=active]:h-screen max-lg:in-data-[state=active]:backdrop-blur"
+            "h-18 absolute inset-x-0 top-0 z-50 border-transparent ring-1 ring-transparent transition-all duration-300",
+            "in-data-scrolled:border-foreground/5 in-data-scrolled:border-b in-data-scrolled:bg-background/75 in-data-scrolled:backdrop-blur",
+            "has-data-[state=open]:ring-foreground/5 has-data-[state=open]:bg-card/75 has-data-[state=open]:shadow-lg has-data-[state=open]:backdrop-blur has-data-[state=open]:border-b has-data-[state=open]:shadow-black/10 has-data-[state=open]:h-[calc(var(--navigation-menu-viewport-height)+3.4rem)]",
+            "max-lg:in-data-[state=active]:h-screen max-lg:in-data-[state=active]:bg-background/75 max-lg:in-data-[state=active]:backdrop-blur max-lg:h-14 max-lg:overflow-hidden max-lg:border-b"
           )}
         >
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="max-lg:not-in-data-[state=active]:h-16 relative flex flex-wrap items-center justify-between py-1.5 lg:py-5 lg:z-[60]">
-              <div className="max-lg:in-data-[state=active]:border-foreground/5 max-lg:in-data-[state=active]:border-b flex items-center justify-between gap-8 max-lg:h-14 max-lg:w-full lg:relative lg:z-10">
-                {header.brand && <LogoComponent brand={header.brand} />}
+          <div className="container">
+            <div className="relative flex flex-wrap items-center justify-between lg:py-5">
+              <div
+                aria-hidden
+                className="in-has-data-[state=open]:block absolute inset-x-0 bottom-0 hidden h-px bg-[length:4px_1px] bg-repeat-x opacity-20 [background-image:linear-gradient(90deg,var(--color-foreground)_1px,transparent_1px)]"
+              />
+              <div className="flex justify-between gap-8 max-lg:h-14 max-lg:w-full max-lg:border-b">
+                {header.brand && <BrandLogo brand={header.brand} />}
 
+                {isLarge && <NavMenu />}
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   aria-label={
@@ -239,67 +250,36 @@ export function Header({ header }: { header: HeaderType }) {
                 </button>
               </div>
 
-              {isLarge && (
-                <motion.div
-                  animate={{ width: "fit-content", gap: 8 }}
-                  className="bg-popover/50 ring-background inset-shadow-sm inset-shadow-white/[0.02] border-foreground/5 fixed left-1/2 top-4 z-50 -translate-x-1/2 size-fit max-w-xl rounded-xl border p-1.5 shadow-xl shadow-black/25 ring-1 backdrop-blur-xl"
-                >
-                  <div className="flex items-center">
-                    <AnimatePresence>
-                      {isScrolled && (
-                        <motion.div
-                          key="logo"
-                          initial={{ opacity: 0, width: 0 }}
-                          animate={{ opacity: 1, width: "3rem" }}
-                          exit={{ opacity: 0, width: 0 }}
-                          className="before:bg-foreground/10 before:border-background/75 relative before:absolute before:inset-y-1 before:right-2 before:w-0.5 before:rounded before:border-r"
-                        >
-                          <Link
-                            href={header.brand?.url || "/"}
-                            aria-label="home"
-                            className="hover:bg-foreground/5 flex size-7 rounded-md"
-                          >
-                            <Image
-                              src={header.brand?.logo?.src || "/logo.png"}
-                              alt={
-                                header.brand?.logo?.alt ||
-                                header.brand?.title ||
-                                ""
-                              }
-                              width={100}
-                              height={100}
-                              className="m-auto size-6"
-                            />
-                          </Link>
-                        </motion.div>
-                      )}
-                      {header.nav && <NavMenu />}
-                      {isScrolled && (
-                        <motion.div
-                          key="sign-in-button"
-                          initial={{ opacity: 0, width: 0 }}
-                          animate={{ opacity: 1, width: "auto" }}
-                          exit={{ opacity: 0, width: 0 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="mx-4">
-                            <SignUser isScrolled={!isScrolled} />
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </motion.div>
-              )}
               {!isLarge && isMobileMenuOpen && (
                 <MobileMenu closeMenu={() => setIsMobileMenuOpen(false)} />
               )}
 
-              <div className="max-lg:in-data-[state=active]:mt-6 max-lg:in-data-[state=active]:flex mb-6 max-lg:hidden w-full flex-wrap items-center justify-end space-y-8 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent lg:relative lg:z-10">
-                <div className="flex w-full flex-row items-center gap-6 md:w-fit">
-                  <SignUser isScrolled={isScrolled} signButtonSize="lg" />
-                  <ThemeToggler />
-                  <LocaleSelector />
+              <div className="max-lg:in-data-[state=active]:mt-6 in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+                <div className="flex items-center w-full flex-col space-y-3 sm:flex-row sm:gap-6 sm:space-y-0 md:w-fit">
+                  {header.show_theme ? <ThemeToggler /> : null}
+                  {header.show_locale ? <LocaleSelector /> : null}
+                  {header.show_sign ? <SignUser /> : null}
+
+                  {header.buttons &&
+                    header.buttons.map((button, idx) => (
+                      <Button
+                        asChild
+                        key={idx}
+                        variant={button.variant || "default"}
+                        size={button.size || "sm"}
+                        className="h-7 ring-0"
+                      >
+                        <Link
+                          href={button.url || ""}
+                          target={button.target || "_self"}
+                        >
+                          {button.icon && (
+                            <SmartIcon name={button.icon as string} />
+                          )}
+                          <span>{button.title}</span>
+                        </Link>
+                      </Button>
+                    ))}
                 </div>
               </div>
             </div>

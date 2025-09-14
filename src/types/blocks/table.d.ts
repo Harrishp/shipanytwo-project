@@ -1,4 +1,4 @@
-import { Pagination } from "./base";
+import { Pagination } from "./common";
 
 export interface TableColumn {
   name?: string;

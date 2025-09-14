@@ -1,49 +1,54 @@
-import { ChevronRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+
 import Image from "next/image";
-import Link from "next/link";
-import { LandingData } from "@/services/locale";
+import { Link } from "@/core/i18n/navigation";
+import { cn } from "@/lib/utils";
+import { Showcases as ShowcasesType } from "@/types/blocks/landing";
 
-export function Showcases({ data }: { data: LandingData["showcases"] }) {
-  if (!data) {
-    return null;
-  }
-
+export function Showcases({
+  showcases,
+  className,
+}: {
+  showcases: ShowcasesType;
+  className?: string;
+}) {
   return (
-    <section className="bg-background">
-      <div className="@container py-16 md:py-24">
-        <div className="container">
-          <h2 className="text-muted-foreground text-balance text-4xl font-semibold md:w-2/3">
-            {data.title}
-            <strong className="text-foreground font-semibold">
-              {data.description}
-            </strong>
-          </h2>
-          <div className="@3xl:grid-cols-3 @xl:grid-cols-2 mt-12 grid gap-6">
-            {data.items.map((item, idx) => (
-              <div className="row-span-4 grid grid-rows-subgrid gap-4">
-                <div className="bg-background ring-foreground/5 aspect-square rounded-xl border border-transparent p-2 shadow ring-1">
+    <section className={cn("py-16 md:py-24", showcases.className, className)}>
+      <div className="mx-auto mb-12 text-center">
+        <h2 className="mb-6 text-pretty text-3xl font-bold lg:text-4xl">
+          {showcases.title}
+        </h2>
+        <p className="mb-4 max-w-xl text-muted-foreground lg:max-w-none lg:text-lg">
+          {showcases.description}
+        </p>
+      </div>
+
+      <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {showcases.items?.map((item, index) => (
+          <Link key={index} href={item.url || ""} target={item.target}>
+            <Card className="p-0 overflow-hidden transition-all hover:shadow-lg dark:hover:shadow-primary/10">
+              <CardContent className="p-0">
+                <div className="relative aspect-16/10 w-full overflow-hidden">
                   <Image
-                    src={item.img_url}
-                    alt={item.title}
-                    width={6394}
-                    height={4500}
-                    className="h-full w-full object-cover object-center rounded-md"
+                    src={item.image?.src ?? ""}
+                    alt={item.image?.alt ?? ""}
+                    fill
+                    className="object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
                   />
                 </div>
-                <h3 className="text-muted-foreground text-sm">{item.title}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
-                <Link
-                  href={item.url}
-                  target={item.target}
-                  className="text-primary hover:text-foreground flex items-center gap-1 text-sm transition-colors duration-200"
-                >
-                  Read more
-                  <ChevronRight className="size-3.5 translate-y-px" />
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2 line-clamp-1 text-balance">
+                    {item.title}
+                  </h3>
+                  <p
+                    className="text-sm text-muted-foreground line-clamp-3"
+                    dangerouslySetInnerHTML={{ __html: item.description ?? "" }}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
       </div>
     </section>
   );

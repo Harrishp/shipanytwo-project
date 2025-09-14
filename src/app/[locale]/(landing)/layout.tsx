@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
-import { setRequestLocale } from "next-intl/server";
 import { Header, Footer } from "@/blocks/landing";
-import { loadMessages } from "@/core/i18n/request";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export default async function LandingLayout({
   children,
@@ -13,13 +12,13 @@ export default async function LandingLayout({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const data = await loadMessages("landing", locale);
+  const t = await getTranslations("landing");
 
   return (
     <div className="w-screen h-screen">
-      <Header header={data.header} />
+      <Header header={t.raw("header")} />
       {children}
-      <Footer footer={data.footer} />
+      <Footer footer={t.raw("footer")} />
     </div>
   );
 }

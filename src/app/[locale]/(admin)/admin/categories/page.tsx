@@ -1,10 +1,12 @@
 import { Header, Main, MainHeader } from "@/blocks/dashboard";
 import { TableCard } from "@/blocks/table";
 import { type Table } from "@/types/blocks/table";
-import { Button } from "@/types/blocks/base";
+import { Button } from "@/types/blocks/common";
 import {
-  getCategories,
-  getCategoriesCount,
+  getTaxonomies,
+  getTaxonomiesCount,
+  TaxonomyStatus,
+  TaxonomyType,
   type Taxonomy,
 } from "@/services/taxonomy";
 
@@ -17,8 +19,11 @@ export default async function CategoriesPage({
   const page = pageNum || 1;
   const limit = pageSize || 30;
 
-  const total = await getCategoriesCount();
-  const data = await getCategories({
+  const total = await getTaxonomiesCount({
+    type: TaxonomyType.CATEGORY,
+  });
+  const data = await getTaxonomies({
+    type: TaxonomyType.CATEGORY,
     page,
     limit,
   });
@@ -47,7 +52,7 @@ export default async function CategoriesPage({
         callback: (item: Taxonomy) => {
           return [
             {
-              name: "edit",
+              id: "edit",
               title: "Edit",
               icon: "RiEditLine",
               url: `/admin/categories/${item.id}/edit`,
@@ -58,8 +63,8 @@ export default async function CategoriesPage({
     ],
     actions: [
       {
-        name: "edit",
-        text: "Edit",
+        id: "edit",
+        title: "Edit",
         icon: "RiEditLine",
         url: "/admin/categories/[id]/edit",
       },
@@ -74,8 +79,8 @@ export default async function CategoriesPage({
 
   const actions: Button[] = [
     {
-      name: "add",
-      text: "Add Category",
+      id: "add",
+      title: "Add Category",
       icon: "RiAddLine",
       url: "/admin/categories/add",
     },

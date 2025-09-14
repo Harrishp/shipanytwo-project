@@ -1,31 +1,36 @@
-export function Stats() {
+import { Stats as StatsType } from "@/types/blocks/landing";
+
+export function Stats({
+  stats,
+  className,
+}: {
+  stats: StatsType;
+  className?: string;
+}) {
   return (
-    <section className="py-12 md:py-20">
-      <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
+    <section
+      id={stats.id}
+      className={`py-12 md:py-24 ${stats.className} ${className}`}
+    >
+      <div className={`container space-y-8 md:space-y-16`}>
         <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center">
-          <h2 className="text-4xl font-medium lg:text-5xl">
-            Tailark in numbers
+          <h2 className="text-foreground mb-4 text-3xl font-semibold tracking-tight md:text-4xl">
+            {stats.title}
           </h2>
-          <p>
-            Gemini is evolving to be more than just the models. It supports an
-            entire to the APIs and platforms helping developers and businesses
-            innovate.
+          <p className="text-muted-foreground mb-6 md:mb-12 lg:mb-16">
+            {stats.description}
           </p>
         </div>
 
         <div className="grid gap-12 divide-y *:text-center md:grid-cols-3 md:gap-2 md:divide-x md:divide-y-0">
-          <div className="space-y-4">
-            <div className="text-5xl font-bold">+1200</div>
-            <p>Stars on GitHub</p>
-          </div>
-          <div className="space-y-4">
-            <div className="text-5xl font-bold">22 Million</div>
-            <p>Active Users</p>
-          </div>
-          <div className="space-y-4">
-            <div className="text-5xl font-bold">+500</div>
-            <p>Powered Apps</p>
-          </div>
+          {stats.items?.map((item, idx) => (
+            <div className="space-y-4" key={idx}>
+              <div className="text-5xl font-bold text-primary">
+                {item.title}
+              </div>
+              <p>{item.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -24,7 +24,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Fragment } from "react";
-import { NavItem, Nav as NavType } from "@/types/blocks/base";
+import { NavItem, Nav as NavType } from "@/types/blocks/common";
 
 export function SignUser({ nav }: { nav: NavType }) {
   const { data: session, isPending } = useSession();
@@ -104,7 +104,7 @@ export function SignUser({ nav }: { nav: NavType }) {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   {nav.items.map((item: NavItem | undefined) => (
-                    <Fragment key={item?.name || item?.title}>
+                    <Fragment key={item?.title || item?.title}>
                       <DropdownMenuItem className="cursor-pointer">
                         <Link
                           href={item?.url || ""}

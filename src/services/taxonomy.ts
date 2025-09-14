@@ -1,6 +1,6 @@
 import { taxonomy } from "@/config/db/schema";
 import { db } from "@/core/db";
-import { and, count, desc, eq } from "drizzle-orm";
+import { and, count, desc, eq, inArray } from "drizzle-orm";
 
 export type Taxonomy = typeof taxonomy.$inferSelect;
 export type NewTaxonomy = typeof taxonomy.$inferInsert;
@@ -34,6 +34,14 @@ export async function updateTaxonomy(id: string, data: UpdateTaxonomy) {
   return result;
 }
 
+export async function deleteTaxonomy(id: string) {
+  const result = await updateTaxonomy(id, {
+    status: TaxonomyStatus.ARCHIVED,
+  });
+
+  return result;
+}
+
 export async function findTaxonomy({
   id,
   slug,
@@ -59,11 +67,13 @@ export async function findTaxonomy({
 }
 
 export async function getTaxonomies({
+  ids,
   type,
   status,
   page = 1,
   limit = 30,
 }: {
+  ids?: string[];
   type?: TaxonomyType;
   status?: TaxonomyStatus;
   page?: number;
@@ -74,6 +84,7 @@ export async function getTaxonomies({
     .from(taxonomy)
     .where(
       and(
+        ids ? inArray(taxonomy.id, ids) : undefined,
         type ? eq(taxonomy.type, type) : undefined,
         status ? eq(taxonomy.status, status) : undefined
       )
@@ -104,38 +115,4 @@ export async function getTaxonomiesCount({
     .limit(1);
 
   return result?.count || 0;
-}
-
-export async function getCategories({
-  page = 1,
-  limit = 30,
-}: {
-  page?: number;
-  limit?: number;
-} = {}): Promise<Taxonomy[]> {
-  return getTaxonomies({
-    type: TaxonomyType.CATEGORY,
-    status: TaxonomyStatus.PUBLISHED,
-    page,
-    limit,
-  });
-}
-
-export async function findCategory({
-  id,
-  slug,
-  status,
-}: {
-  id?: string;
-  slug?: string;
-  status?: TaxonomyStatus;
-}) {
-  return findTaxonomy({ id, slug, status });
-}
-
-export async function getCategoriesCount(): Promise<number> {
-  return getTaxonomiesCount({
-    type: TaxonomyType.CATEGORY,
-    status: TaxonomyStatus.PUBLISHED,
-  });
 }

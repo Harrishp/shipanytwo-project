@@ -1,6 +1,5 @@
 import { Pricing, FAQ, Testimonials } from "@/blocks/landing";
-import { setRequestLocale } from "next-intl/server";
-import { loadMessages } from "@/core/i18n/request";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export default async function PricingPage({
   params,
@@ -10,15 +9,13 @@ export default async function PricingPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const landingData = await loadMessages("landing", locale);
+  const t = await getTranslations("landing");
 
   return (
     <>
-      {landingData.pricing && <Pricing />}
-      {landingData.faq && <FAQ data={landingData.faq} />}
-      {landingData.testimonials && (
-        <Testimonials data={landingData.testimonials} />
-      )}
+      <Pricing />
+      <FAQ faq={t.raw("faq")} />
+      <Testimonials testimonials={t.raw("testimonials")} />
     </>
   );
 }

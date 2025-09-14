@@ -1,4 +1,10 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  timestamp,
+  boolean,
+  integer,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -83,6 +89,7 @@ export const taxonomy = pgTable("taxonomy", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
   deletedAt: timestamp("deleted_at"),
+  sort: integer("sort").default(0).notNull(),
 });
 
 export const post = pgTable("post", {
@@ -107,4 +114,5 @@ export const post = pgTable("post", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
   deletedAt: timestamp("deleted_at"),
+  sort: integer("sort").default(0).notNull(),
 });

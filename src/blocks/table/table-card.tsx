@@ -1,7 +1,7 @@
 import { Table as TableType } from "@/types/blocks/table";
 import { Table } from "@/blocks/table";
 import { Card } from "@/components/ui/card";
-import { Pagination } from "@/blocks/base/pagination";
+import { Pagination } from "@/blocks/common/pagination";
 
 export function TableCard({ table }: { table: TableType }) {
   return (

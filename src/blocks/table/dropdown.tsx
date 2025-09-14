@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
-import { Icon } from "@/blocks/base/icon";
+import { SmartIcon } from "@/blocks/common/smart-icon";
 import Link from "next/link";
 import { MoreHorizontal } from "lucide-react";
-import { NavItem } from "@/types/blocks/base";
+import { NavItem } from "@/types/blocks/common";
 
 export function Dropdown({
   value,
@@ -43,7 +43,7 @@ export function Dropdown({
                 className="flex items-center gap-2 w-full"
               >
                 {item.icon && (
-                  <Icon name={item.icon as string} className="w-4 h-4" />
+                  <SmartIcon name={item.icon as string} className="w-4 h-4" />
                 )}
                 {item.title}
               </Link>

@@ -13,9 +13,11 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
 
   useEffect(() => {
-    console.log("app init");
-    setTheme("light");
-  }, []);
+    // 只在客户端且主题未设置时设置默认主题
+    if (typeof window !== "undefined" && !theme) {
+      setTheme("dark");
+    }
+  }, [theme, setTheme]);
 
   return <AppContext.Provider value={{}}>{children}</AppContext.Provider>;
 };

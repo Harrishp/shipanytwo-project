@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronRight } from "lucide-react";
 import { usePathname, useRouter, Link } from "@/core/i18n/navigation";
-import { NavItem, type Nav as NavType } from "@/types/blocks/base";
-import { Icon } from "../base/icon";
+import { NavItem, type Nav as NavType } from "@/types/blocks/common";
+import { SmartIcon } from "@/blocks/common/smart-icon";
 
 export function Nav({ nav, className }: { nav: NavType; className?: string }) {
   const pathname = usePathname();
@@ -32,7 +32,7 @@ export function Nav({ nav, className }: { nav: NavType; className?: string }) {
         <SidebarMenu>
           {nav.items.map((item: NavItem | undefined) => (
             <Collapsible
-              key={item?.name || item?.title || ""}
+              key={item?.title || item?.title || ""}
               asChild
               defaultOpen={item?.is_expand || false}
               className="group/collapsible"
@@ -52,7 +52,7 @@ export function Nav({ nav, className }: { nav: NavType; className?: string }) {
                       href={item?.url as string}
                       target={item?.target as string}
                     >
-                      {item?.icon && <Icon name={item.icon as string} />}
+                      {item?.icon && <SmartIcon name={item.icon as string} />}
                       <span>{item?.title || ""}</span>
                       {item?.children && (
                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -64,7 +64,9 @@ export function Nav({ nav, className }: { nav: NavType; className?: string }) {
                   <CollapsibleContent>
                     <SidebarMenuSub>
                       {item.children?.map((subItem: NavItem) => (
-                        <SidebarMenuSubItem key={subItem.name || subItem.title}>
+                        <SidebarMenuSubItem
+                          key={subItem.title || subItem.title}
+                        >
                           <SidebarMenuSubButton
                             asChild
                             className={`${

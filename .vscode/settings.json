@@ -3,5 +3,9 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "i18n-ally.localesPaths": ["src/config/locale", "src/config/locale/messages"]
+  "i18n-ally.localesPaths": [
+    "src/config/locale",
+    "src/config/locale/messages",
+    "src/config/locale/landing"
+  ]
 }

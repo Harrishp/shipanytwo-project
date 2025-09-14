@@ -14,7 +14,7 @@ import { Time } from "./time";
 import { Copy } from "./copy";
 
 import { type TableColumn } from "@/types/blocks/table";
-import { type Pagination } from "@/types/blocks/base";
+import { type Pagination } from "@/types/blocks/common";
 import { Dropdown } from "./dropdown";
 
 export function Table({

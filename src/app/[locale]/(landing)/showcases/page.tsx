@@ -1,5 +1,5 @@
-import { Showcases } from "@/blocks/landing";
-import { getShowcaseData } from "@/services/locale";
+import { Hero, Showcases } from "@/blocks/landing";
+import { getTranslations } from "next-intl/server";
 import { setRequestLocale } from "next-intl/server";
 
 export default async function ShowcasesPage({
@@ -10,9 +10,19 @@ export default async function ShowcasesPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const showcaseData = await getShowcaseData(locale);
+  const t = await getTranslations("landing");
+  const tt = await getTranslations("demo.showcases");
 
   return (
-    <>{showcaseData.showcases && <Showcases data={showcaseData.showcases} />}</>
+    <>
+      <Hero
+        hero={{
+          title: tt.raw("title"),
+          description: tt.raw("description"),
+          buttons: tt.raw("buttons"),
+        }}
+      />
+      <Showcases showcases={t.raw("showcases")} />
+    </>
   );
 }

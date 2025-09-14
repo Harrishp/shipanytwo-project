@@ -1,0 +1,20 @@
+{
+  "showcases": {
+    "title": "Showcases",
+    "description": "Awesome works built with ShipAny.",
+    "buttons": [
+      {
+        "title": "Submit Your Work",
+        "url": "https://shipany.ai/my-works/add",
+        "target": "_blank",
+        "variant": "default",
+        "icon": "Plus"
+      }
+    ]
+  },
+  "ai-image-generator": {
+    "title": "AI Image Generator",
+    "description": "Use AI image model to generate images, support image to image and text to image.",
+    "tip": "🎁 50% off for first month"
+  }
+}

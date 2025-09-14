@@ -1,23 +1,16 @@
 import { Cpu, Lock, Sparkles, Zap } from "lucide-react";
 import Image from "next/image";
-import { LandingData } from "@/services/locale";
+import { Features as FeaturesType } from "@/types/blocks/landing";
 
-export function FeaturesTab({ data }: { data: LandingData["features"] }) {
-  if (!data) {
-    return null;
-  }
-
+export function FeaturesTab({ features }: { features: FeaturesType }) {
   return (
     <section className="overflow-hidden py-16 md:py-32">
       <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-12">
         <div className="relative z-10 max-w-2xl">
           <h2 className="text-4xl font-semibold lg:text-5xl">
-            Built for Scaling teams
+            {features.title}
           </h2>
-          <p className="mt-6 text-lg">
-            Empower your team with workflows that adapt to your needs, whether
-            you prefer git synchronization or a AI Agents interface.
-          </p>
+          <p className="mt-6 text-lg">{features.description}</p>
         </div>
         <div className="relative -mx-4 rounded-3xl p-3 md:-mx-12 lg:col-span-3">
           <div className="perspective-midrange">
@@ -25,21 +18,21 @@ export function FeaturesTab({ data }: { data: LandingData["features"] }) {
               <div className="aspect-88/36 relative">
                 <div className="bg-radial-[at_75%_25%] to-background z-1 -inset-17 absolute from-transparent to-75%"></div>
                 <Image
-                  src="/mail-upper.png"
+                  src={features.image?.src ?? ""}
                   className="absolute inset-0 z-10"
                   alt="payments illustration dark"
                   width={2797}
                   height={1137}
                 />
                 <Image
-                  src="/mail-back.png"
+                  src={features.image?.src ?? ""}
                   className="hidden dark:block"
                   alt="payments illustration dark"
                   width={2797}
                   height={1137}
                 />
                 <Image
-                  src="/mail-back-light.png"
+                  src={features.image?.src ?? ""}
                   className="dark:hidden"
                   alt="payments illustration light"
                   width={2797}

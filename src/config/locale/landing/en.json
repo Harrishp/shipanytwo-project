@@ -1,5 +1,6 @@
 {
   "header": {
+    "id": "header",
     "brand": {
       "title": "ShipAny",
       "logo": {
@@ -13,38 +14,53 @@
         {
           "title": "Features",
           "url": "/#features",
-          "icon": "RiHomeLine"
+          "icon": "Sparkles"
+        },
+        {
+          "title": "Showcases",
+          "url": "/showcases",
+          "icon": "Box"
         },
         {
           "title": "Pricing",
           "url": "/pricing",
-          "icon": "RiMoneyDollarCircleLine"
+          "icon": "DollarSign"
         },
         {
           "title": "Demo",
-          "icon": "RiApps2Line",
+          "icon": "Bot",
           "children": [
             {
-              "title": "Chatbot",
-              "url": "/demo/chatbot",
-              "icon": "RiApps2Line"
+              "title": "AI Chatbot",
+              "url": "/demo/ai-chatbot",
+              "icon": "Bot"
             },
             {
-              "title": "Image Generator",
-              "url": "/demo/image-generator",
-              "icon": "RiApps2Line"
+              "title": "AI Image Generator",
+              "url": "/demo/ai-image-generator",
+              "icon": "Image"
+            },
+            {
+              "title": "AI Video Generator",
+              "url": "/demo/ai-video-generator",
+              "icon": "Video"
+            },
+            {
+              "title": "AI Audio Generator",
+              "url": "/demo/ai-audio-generator",
+              "icon": "AudioLines"
             }
           ]
         },
         {
           "title": "Blog",
           "url": "/blog",
-          "icon": "RiArticleLine"
+          "icon": "Newspaper"
         },
         {
           "title": "Docs",
           "url": "/docs",
-          "icon": "RiBookOpenLine"
+          "icon": "BookOpenText"
         }
       ]
     },
@@ -53,8 +69,8 @@
         "title": "Get ShipAny",
         "url": "https://shipany.ai",
         "target": "_blank",
-        "variant": "link",
-        "icon": "RiArrowRightUpLine"
+        "variant": "outline",
+        "icon": "ArrowUpRight"
       }
     ],
     "user_nav": {
@@ -78,29 +94,29 @@
     "highlight_text": "Ship Any",
     "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.<br/>Ship Fast with a variety of templates and components.",
     "announcement": {
-      "label": "2025",
-      "title": "🎉 Happy New Year",
+      "badge": "New",
+      "title": "🎉 ShipAny Template Two",
       "url": "/pricing"
     },
     "tip": "🎁 50% off before 2025",
     "buttons": [
       {
         "title": "Get Started",
-        "icon": "RiFlashlightFill",
+        "icon": "Zap",
         "url": "/pricing",
         "target": "_self",
         "variant": "default"
       },
       {
         "title": "Read Document",
-        "icon": "RiBookOpenLine",
+        "icon": "BookOpenText",
         "url": "https://docs.shipany.ai",
         "target": "_blank",
         "variant": "outline"
       }
     ],
-    "show_happy_users": true,
-    "show_badge": false
+    "show_avatars": true,
+    "show_award": false
   },
   "logos": {
     "title": "ShipAny is built on the shoulders of giants",
@@ -143,34 +159,46 @@
     ]
   },
   "introduce": {
-    "name": "introduce",
+    "id": "introduce",
     "title": "What is ShipAny",
     "label": "Introduce",
     "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups.",
-    "img_url": "/imgs/features/1.png",
+    "image": {
+      "src": "/imgs/features/1.png",
+      "alt": "introduce"
+    },
     "items": [
       {
         "title": "Ready-to-use Templates",
         "description": "Choose from dozens of production-ready AI SaaS templates to quickly start your project.",
         "icon": "RiNextjsFill",
-        "img_url": "/imgs/features/1.png"
+        "image": {
+          "src": "/imgs/features/1.png",
+          "alt": "introduce"
+        }
       },
       {
         "title": "Infrastructure Setup",
         "description": "Get instant access to scalable infrastructure with best practices built-in.",
         "icon": "RiDatabase2Line",
-        "img_url": "/imgs/features/2.png"
+        "image": {
+          "src": "/imgs/features/2.png",
+          "alt": "introduce"
+        }
       },
       {
         "title": "Quick Deployment",
         "description": "Deploy your AI SaaS application to production in hours, not days.",
         "icon": "RiCloudyFill",
-        "img_url": "/imgs/features/3.png"
+        "image": {
+          "src": "/imgs/features/3.png",
+          "alt": "introduce"
+        }
       }
     ]
   },
-  "benefit": {
-    "name": "benefit",
+  "benefits": {
+    "id": "benefits",
     "title": "Why Choose ShipAny",
     "label": "Benefits",
     "description": "Get everything you need to launch your AI startup - from ready-to-use templates to technical support.",
@@ -179,99 +207,115 @@
         "title": "Complete Framework",
         "description": "Built on Next.js with authentication, payments, and AI integration - everything works out of the box.",
         "icon": "RiNextjsFill",
-        "img_url": "/imgs/features/2.png"
+        "image": {
+          "src": "/imgs/features/2.png",
+          "alt": "benefits"
+        }
       },
       {
         "title": "Rich Templates Library",
         "description": "Choose from various AI SaaS templates to kickstart your project - chatbots, image generation, and more.",
         "icon": "RiClapperboardAiLine",
-        "img_url": "/imgs/features/3.png"
+        "image": {
+          "src": "/imgs/features/3.png",
+          "alt": "benefits"
+        }
       },
       {
         "title": "Technical Guidance",
         "description": "Get dedicated support and join our developer community to ensure your successful launch.",
         "icon": "RiCodeFill",
-        "img_url": "/imgs/features/4.png"
+        "image": {
+          "src": "/imgs/features/4.png",
+          "alt": "benefits"
+        }
       }
     ]
   },
   "usage": {
-    "name": "usage",
+    "id": "usage",
     "title": "How to Launch with ShipAny",
     "description": "Get your AI SaaS startup running in three simple steps:",
-    "img_url": "/imgs/features/1.png",
+    "image": {
+      "src": "/imgs/features/1.png",
+      "alt": "usage"
+    },
     "image_position": "left",
     "text_align": "center",
     "items": [
       {
         "title": "Get ShipAny",
         "description": "Buy ShipAny with a one-time payment. Check your email for the code and documentation.",
-        "img_url": "/imgs/features/5.png"
+        "image": {
+          "src": "/imgs/features/5.png",
+          "alt": "usage"
+        }
       },
       {
         "title": "Start Your Project",
         "description": "Read the documentation and clone the code of ShipAny. Start building your AI SaaS startup.",
-        "img_url": "/imgs/features/6.png"
+        "image": {
+          "src": "/imgs/features/6.png",
+          "alt": "usage"
+        }
       },
       {
         "title": "Customize Your Project",
         "description": "Modify the template with your data and contents. Specific AI functionality needs.",
-        "img_url": "/imgs/features/7.png"
+        "image": {
+          "src": "/imgs/features/7.png",
+          "alt": "usage"
+        }
       },
       {
         "title": "Deploy to Production",
         "description": "Deploy your project to production with a few steps and start serving customers immediately.",
-        "img_url": "/imgs/features/8.png"
+        "image": {
+          "src": "/imgs/features/8.png",
+          "alt": "usage"
+        }
       }
     ]
   },
   "features": {
-    "label": "Features",
-    "name": "features",
+    "id": "features",
     "title": "Key Features of ShipAny",
     "description": "Everything you need to launch your AI SaaS startup quickly and efficiently.",
-    "img_url": "/imgs/features/1.png",
     "items": [
       {
         "title": "Next.js Boilerplate",
         "description": "Production-ready Next.js templates with SEO-friendly structure and i18n support.",
-        "icon": "RiNextjsFill",
-        "img_url": "/imgs/features/1.png"
+        "icon": "RiNextjsFill"
       },
       {
         "title": "Authentication & Payments",
         "description": "Integrated Google OAuth, one-tap login, and Stripe payment processing.",
-        "icon": "RiKey2Fill",
-        "img_url": "/imgs/features/2.png"
+        "icon": "RiKey2Fill"
       },
       {
         "title": "Data Infrastructure",
         "description": "Built-in Supabase integration for reliable and scalable data storage.",
-        "icon": "RiDatabase2Line",
-        "img_url": "/imgs/features/3.png"
+        "icon": "RiDatabase2Line"
       },
       {
         "title": "One-Click Deployment",
         "description": "Seamless deployment to Vercel or Cloudflare with automated setup.",
-        "icon": "RiCloudy2Fill",
-        "img_url": "/imgs/features/4.png"
+        "icon": "RiCloudy2Fill"
       },
       {
         "title": "Business Analytics",
         "description": "Integrated Google Analytics and Search Console for tracking growth.",
-        "icon": "RiBarChart2Line",
-        "img_url": "/imgs/features/5.png"
+        "icon": "RiBarChart2Line"
       },
       {
         "title": "AI-Ready Infrastructure",
         "description": "Pre-configured AI integration with built-in credits system and API sales.",
-        "icon": "RiRobot2Line",
-        "img_url": "/imgs/features/6.png"
+        "icon": "RiRobot2Line"
       }
     ]
   },
   "showcases": {
-    "name": "showcase",
+    "id": "showcase",
     "title": "AI SaaS Startups built with ShipAny",
     "description": "Easy to use and fast to ship.",
     "items": [
@@ -280,140 +324,178 @@
         "description": "AI Search Engine",
         "url": "https://thinkany.ai",
         "target": "_blank",
-        "img_url": "/imgs/cases/7.png"
+        "image": {
+          "src": "/imgs/cases/7.png",
+          "alt": "showcases"
+        }
       },
       {
         "title": "HeyBeauty",
         "description": "AI Virtual Try On",
         "url": "https://heybeauty.ai",
         "target": "_blank",
-        "img_url": "/imgs/cases/5.png"
+        "image": {
+          "src": "/imgs/cases/5.png",
+          "alt": "showcases"
+        }
       },
       {
         "title": "AI Wallpaper",
         "description": "AI Wallpaper Generator",
         "url": "https://aiwallpaper.shop",
         "target": "_blank",
-        "img_url": "/imgs/cases/1.png"
+        "image": {
+          "src": "/imgs/cases/1.png",
+          "alt": "showcases"
+        }
       },
       {
         "title": "AI Cover",
         "description": "AI Cover Generator",
         "url": "https://aicover.design",
         "target": "_blank",
-        "img_url": "/imgs/cases/2.png"
+        "image": {
+          "src": "/imgs/cases/2.png",
+          "alt": "showcases"
+        }
       },
       {
         "title": "GPTs Works",
         "description": "GPTs Directory",
         "url": "https://gpts.works",
         "target": "_blank",
-        "img_url": "/imgs/cases/3.png"
+        "image": {
+          "src": "/imgs/cases/3.png",
+          "alt": "showcases"
+        }
       },
       {
         "title": "Melodisco",
         "description": "AI Music Player",
         "url": "https://melodis.co",
         "target": "_blank",
-        "img_url": "/imgs/cases/4.png"
+        "image": {
+          "src": "/imgs/cases/4.png",
+          "alt": "showcases"
+        }
       },
       {
         "title": "Pagen",
         "description": "AI Landing Page Generator",
         "url": "https://pagen.so",
         "target": "_blank",
-        "img_url": "/imgs/cases/6.png"
+        "image": {
+          "src": "/imgs/cases/6.png",
+          "alt": "showcases"
+        }
       },
       {
         "title": "SoraFM",
         "description": "AI Video Generator",
         "url": "https://sorafm.trys.ai",
         "target": "_blank",
-        "img_url": "/imgs/cases/8.png"
+        "image": {
+          "src": "/imgs/cases/8.png",
+          "alt": "showcases"
+        }
       },
       {
         "title": "PodLM",
         "description": "AI Podcast Generator",
         "url": "https://podlm.ai",
         "target": "_blank",
-        "img_url": "/imgs/cases/9.png"
+        "image": {
+          "src": "/imgs/cases/9.png",
+          "alt": "showcases"
+        }
       }
     ]
   },
   "stats": {
-    "name": "stats",
-    "label": "Stats",
+    "id": "stats",
     "title": "People Love ShipAny",
     "description": "for it's easy to use and fast to ship.",
-    "icon": "FaRegHeart",
     "items": [
       {
-        "title": "Trusted by",
-        "label": "99+",
+        "title": "999+",
         "description": "Customers"
       },
       {
-        "title": "Built in",
-        "label": "20+",
-        "description": "Components"
+        "title": "200+",
+        "description": "Blocks"
       },
       {
-        "title": "Ship Fast in",
-        "label": "5",
-        "description": "Minutes"
+        "title": "50+",
+        "description": "Templates"
       }
     ]
   },
   "testimonials": {
-    "name": "testimonial",
-    "label": "Testimonial",
+    "id": "testimonials",
     "title": "What Users Say About ShipAny",
     "description": "Hear from developers and founders who launched their AI startups with ShipAny.",
-    "icon": "GoThumbsup",
     "items": [
       {
         "name": "David Chen",
         "role": "Founder of AIWallpaper.shop",
-        "content": "ShipAny saved us months of development time. We launched our AI wallpaper business in just 2 days and got our first paying customer within a week!",
-        "avatar_url": "/imgs/avatars/1.png"
+        "quote": "ShipAny saved us months of development time. We launched our AI wallpaper business in just 2 days and got our first paying customer within a week!",
+        "image": {
+          "src": "/imgs/avatars/1.png",
+          "alt": "david"
+        }
       },
       {
         "name": "Rachel Kim",
         "role": "CTO at HeyBeauty.ai",
-        "content": "The pre-built AI infrastructure is a game-changer. We didn't have to worry about architecture - just focused on our AI beauty tech and went live fast.",
-        "avatar_url": "/imgs/avatars/2.png"
+        "quote": "The pre-built AI infrastructure is a game-changer. We didn't have to worry about architecture - just focused on our AI beauty tech and went live fast.",
+        "image": {
+          "src": "/imgs/avatars/2.png",
+          "alt": "rachel"
+        }
       },
       {
         "name": "Marcus Thompson",
         "role": "Solo Developer",
-        "content": "As a solo developer, ShipAny gave me everything I needed - auth, payments, AI integration, and beautiful UI. Launched my SaaS in a weekend!",
-        "avatar_url": "/imgs/avatars/3.png"
+        "quote": "As a solo developer, ShipAny gave me everything I needed - auth, payments, AI integration, and beautiful UI. Launched my SaaS in a weekend!",
+        "image": {
+          "src": "/imgs/avatars/3.png",
+          "alt": "marcus"
+        }
       },
       {
         "name": "Sofia Garcia",
         "role": "CEO of Melodisco",
-        "content": "The templates are production-ready and highly customizable. We built our AI music platform in hours instead of months. Incredible time-to-market!",
-        "avatar_url": "/imgs/avatars/4.png"
+        "quote": "The templates are production-ready and highly customizable. We built our AI music platform in hours instead of months. Incredible time-to-market!",
+        "image": {
+          "src": "/imgs/avatars/4.png",
+          "alt": "sofia"
+        }
       },
       {
         "name": "James Wilson",
         "role": "Tech Lead at GPTs.works",
-        "content": "ShipAny's infrastructure is rock-solid. We scaled from 0 to 10k users without touching the backend. Best investment for our AI startup.",
-        "avatar_url": "/imgs/avatars/5.png"
+        "quote": "ShipAny's infrastructure is rock-solid. We scaled from 0 to 10k users without touching the backend. Best investment for our AI startup.",
+        "image": {
+          "src": "/imgs/avatars/5.png",
+          "alt": "james"
+        }
       },
       {
         "name": "Anna Zhang",
         "role": "Startup Founder",
-        "content": "From idea to launch in 3 days! ShipAny's templates and deployment tools made it possible to test our AI business concept incredibly fast.",
-        "avatar_url": "/imgs/avatars/6.png"
+        "quote": "From idea to launch in 3 days! ShipAny's templates and deployment tools made it possible to test our AI business concept incredibly fast.",
+        "image": {
+          "src": "/imgs/avatars/6.png",
+          "alt": "anna"
+        }
       }
     ]
   },
   "faq": {
-    "name": "faq",
-    "label": "FAQ",
+    "id": "faq",
     "title": "Frequently Asked Questions About ShipAny",
     "description": "Have another question? Contact us on Discord or by email.",
+    "tip": "Can't find what you're looking for? Contact our <a href='https://discord.gg/HQNnrzjZQS' target='_blank' class='text-primary font-medium hover:underline'>customer support team</a>",
     "items": [
       {
         "question": "What exactly is ShipAny and how does it work?",
@@ -442,7 +524,7 @@
     ]
   },
   "cta": {
-    "name": "cta",
+    "id": "cta",
     "title": "Ship your first AI SaaS Startup",
     "description": "Start from here, ship with ShipAny.",
     "buttons": [
@@ -450,28 +532,28 @@
         "title": "Get ShipAny",
         "url": "https://shipany.ai",
         "target": "_blank",
-        "icon": "GoArrowUpRight"
+        "icon": "Zap"
       },
       {
         "title": "Read Document",
         "url": "https://docs.shipany.ai",
         "target": "_blank",
-        "variant": "outline"
+        "variant": "outline",
+        "icon": "BookOpenText"
       }
     ]
   },
   "footer": {
-    "name": "footer",
+    "id": "footer",
     "brand": {
       "title": "ShipAny",
       "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups. Ship Fast with a variety of templates and components.",
-      "logo": {
+      "image": {
         "src": "/logo.png",
         "alt": "ShipAny"
       },
       "url": "/"
     },
-    "copyright": "© 2025 • ShipAny All rights reserved.",
     "nav": {
       "items": [
         {
@@ -479,17 +561,17 @@
           "children": [
             {
               "title": "Features",
-              "url": "/#feature",
+              "url": "/#features",
               "target": "_self"
             },
             {
               "title": "Showcases",
-              "url": "/#showcase",
+              "url": "/showcases",
               "target": "_self"
             },
             {
               "title": "Pricing",
-              "url": "/#pricing",
+              "url": "/pricing",
               "target": "_self"
             }
           ]
@@ -503,8 +585,8 @@
               "target": "_blank"
             },
             {
-              "title": "Components",
-              "url": "https://shipany.ai/components",
+              "title": "Blocks",
+              "url": "https://shipany.ai/blocks",
               "target": "_blank"
             },
             {
@@ -523,13 +605,13 @@
               "target": "_blank"
             },
             {
-              "title": "HeyBeauty",
-              "url": "https://heybeauty.ai",
+              "title": "MCP.so",
+              "url": "https://mcp.so",
               "target": "_blank"
             },
             {
-              "title": "Pagen",
-              "url": "https://pagen.so",
+              "title": "CopyWeb",
+              "url": "https://copyweb.ai",
               "target": "_blank"
             }
           ]
@@ -540,13 +622,13 @@
       "items": [
         {
           "title": "X",
-          "icon": "RiTwitterXFill",
+          "icon": "Twitter",
           "url": "https://x.com/shipanyai",
           "target": "_blank"
         },
         {
           "title": "Github",
-          "icon": "RiGithubFill",
+          "icon": "Github",
           "url": "https://github.com/shipanyai",
           "target": "_blank"
         },
@@ -558,7 +640,7 @@
         },
         {
           "title": "Email",
-          "icon": "RiMailLine",
+          "icon": "Mail",
           "url": "mailto:support@shipany.codes",
           "target": "_self"
         }
@@ -575,6 +657,9 @@
           "url": "/terms-of-service"
         }
       ]
-    }
+    },
+    "show_built_with": true,
+    "show_theme": true,
+    "show_locale": true
   }
 }

@@ -1,4 +1,4 @@
-import { Brand, Nav } from "./base";
+import { Brand, Nav } from "./common";
 
 export interface Dashboard {
   sidebar?: Sidebar;

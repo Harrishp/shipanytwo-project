@@ -13,4 +13,4 @@ export const localeDetection = false;
 
 export const localeRootNamespace = "messages";
 
-export const localeNamespaces = ["landing", "admin"];
+export const localeNamespaces = ["landing", "admin", "demo"];

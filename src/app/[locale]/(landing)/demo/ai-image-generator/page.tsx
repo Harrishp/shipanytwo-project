@@ -1,0 +1,27 @@
+import { FAQ, CTA, Hero, Showcases } from "@/blocks/landing";
+import { ImageGenerator } from "@/blocks/generator/image-generator";
+import { getTranslations } from "next-intl/server";
+
+export default async function ImageGeneratorPage() {
+  const t = await getTranslations("landing");
+  const td = await getTranslations("demo.ai-image-generator");
+
+  const hero = {
+    title: td("title"),
+    description: td("description"),
+    tip: td("tip"),
+  };
+
+  return (
+    <>
+      <Hero hero={hero} />
+
+      <ImageGenerator />
+
+      <Showcases showcases={t.raw("showcases")} />
+
+      <FAQ faq={t.raw("faq")} />
+      <CTA cta={t.raw("cta")} className="bg-muted" />
+    </>
+  );
+}

@@ -15,6 +15,13 @@
       "when": 1757607238180,
       "tag": "0001_military_spitfire",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757734169735,
+      "tag": "0002_legal_the_leader",
+      "breakpoints": true
     }
   ]
 }

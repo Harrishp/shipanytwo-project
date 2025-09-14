@@ -1,56 +1,72 @@
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Cpu, Lock, Sparkles, Zap } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { LandingData } from "@/services/locale";
 import Image from "next/image";
+import { Features as FeaturesType } from "@/types/blocks/landing";
+import { SmartIcon } from "@/blocks/common";
 
-export function FeaturesList({ data }: { data: LandingData["features"] }) {
-  if (!data) {
-    return null;
-  }
-
+export function FeaturesList({
+  features,
+  className,
+}: {
+  features: FeaturesType;
+  className?: string;
+}) {
   return (
-    <section className="overflow-hidden">
-      <div className="py-24">
-        <div className="container">
-          <div className="grid items-center gap-12 pb-12 md:grid-cols-2">
-            <div>
-              <div className="max-w-md">
-                <h2 className="text-foreground text-balance text-4xl font-semibold">
-                  {data.title}
-                </h2>
-                <p className="my-6 text-balance text-lg">{data.description}</p>
-                {/* <p className="text-muted-foreground">{data.description}</p> */}
-                <Button className="mt-8 pr-2" variant="outline" asChild>
-                  <Link href="#">
-                    Learn more
-                    <ChevronRight className="size-4 opacity-50" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            <Image
-              src={data.img_url}
-              alt={data.title}
-              width={400}
-              height={300}
-              className="rounded-lg object-cover"
-            />
-          </div>
+    <section className={`py-16 md:py-24 ${className}`}>
+      <div className="container">
+        <div className="grid items-start gap-12 pb-12 md:grid-cols-2">
+          <div>
+            <div className="">
+              <h2 className="text-foreground text-balance text-4xl font-semibold">
+                {features.title}
+              </h2>
+              <p className="my-6 text-balance text-lg">
+                {features.description}
+              </p>
 
-          <div className="relative grid grid-cols-2 gap-x-3 gap-y-6 border-t pt-12 sm:gap-6 lg:grid-cols-4">
-            {data.items.map((item, idx) => (
-              <div className="space-y-3" key={idx}>
-                <div className="flex items-center gap-2">
-                  <Zap className="text-foreground fill-foreground/10 size-4" />
-                  <h3 className="text-sm font-medium">{item.title}</h3>
+              {features.buttons && features.buttons.length > 0 && (
+                <div className="flex items-center gap-2 justify-center">
+                  {features.buttons?.map((button, idx) => (
+                    <Button variant="outline" asChild key={idx}>
+                      <Link
+                        href={button.url ?? ""}
+                        target={button.target ?? "_self"}
+                      >
+                        {button.icon && (
+                          <SmartIcon name={button.icon as string} size={24} />
+                        )}
+                        {button.title}
+                      </Link>
+                    </Button>
+                  ))}
                 </div>
-                <p className="text-muted-foreground text-sm">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+              )}
+            </div>
           </div>
+          <Image
+            src={features.image?.src ?? ""}
+            alt={features.image?.alt ?? ""}
+            width={400}
+            height={300}
+            className="rounded-lg object-cover"
+          />
+        </div>
+
+        <div className="relative grid grid-cols-2 gap-x-3 gap-y-6 border-t pt-12 sm:gap-6 lg:grid-cols-4">
+          {features.items?.map((item, idx) => (
+            <div className="space-y-3" key={idx}>
+              <div className="flex items-center gap-2">
+                {item.icon && (
+                  <SmartIcon name={item.icon as string} size={16} />
+                )}
+                <h3 className="text-sm font-medium">{item.title}</h3>
+              </div>
+              <p className="text-muted-foreground text-sm">
+                {item.description ?? ""}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -3,10 +3,10 @@
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ScrollBar } from "@/components/ui/scroll-area";
-import { Nav, NavItem, Button as ButtonType } from "@/types/blocks/base";
+import { Nav, NavItem, Button as ButtonType } from "@/types/blocks/common";
 import { Link } from "@/core/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { Icon } from "@/blocks/base/icon";
+import { SmartIcon } from "@/blocks/common/smart-icon";
 
 export function MainHeader({
   title,
@@ -30,13 +30,13 @@ export function MainHeader({
           {actions?.map((action) => (
             <Button
               asChild
-              key={action.name}
+              key={action.title}
               onClick={action.onClick}
               variant={action.variant || "default"}
             >
               <Link href={action.url || ""} target={action.target || "_self"}>
-                {action.icon && <Icon name={action.icon as string} />}
-                {action.text}
+                {action.icon && <SmartIcon name={action.icon as string} />}
+                {action.title}
               </Link>
             </Button>
           ))}
@@ -47,7 +47,7 @@ export function MainHeader({
           <ScrollArea className="w-full lg:max-w-none">
             <div className="space-x-2 flex items-center">
               {tabs?.map((tab) => (
-                <Link key={tab.name || tab.title} href={tab.url || ""}>
+                <Link key={tab.title || tab.title} href={tab.url || ""}>
                   <div
                     className={cn(
                       "px-4 py-1 rounded-full border text-sm text-muted-foreground block duration-150",

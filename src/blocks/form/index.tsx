@@ -10,18 +10,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { FormField as FormFieldType, FormSubmit } from "@/types/blocks/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { Button } from "@/components/ui/button";
-import { Icon } from "@/blocks/base/icon";
-import { Input } from "@/components/ui/input";
+import { SmartIcon } from "@/blocks/common/smart-icon";
+import { Input } from "./input";
 import { Loader } from "lucide-react";
+import { Select } from "./select";
 // import MarkdownEditor from "@/components/blocks/mdeditor";
 
 import { Textarea } from "@/components/ui/textarea";
@@ -31,6 +25,9 @@ import { useRouter } from "@/core/i18n/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { isArray } from "util";
+import { Label } from "@/components/ui/label";
 
 function buildFieldSchema(field: FormFieldType) {
   let schema = z.string();
@@ -129,8 +126,6 @@ export function Form({
       const res = await submit.handler(formData, passby);
       setLoading(false);
 
-      console.log("res", res);
-
       if (!res) {
         throw new Error("No response received from server");
       }
@@ -184,33 +179,31 @@ export function Form({
                           {...item.attributes}
                         />
                       ) : item.type === "select" ? (
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value as any}
-                          {...item.attributes}
-                        >
-                          <SelectTrigger className="w-full bg-background rounded-md">
-                            <SelectValue placeholder={item.placeholder} />
-                          </SelectTrigger>
-                          <SelectContent className="bg-background rounded-md">
-                            {item.options?.map((option: any) => (
-                              <SelectItem
-                                key={option.value}
+                        <Select field={item} formField={field} data={data} />
+                      ) : item.type === "checkbox" ? (
+                        <div className="flex items-center gap-2 flex-wrap ">
+                          {item.options?.map((option: any) => (
+                            <div
+                              key={option.value}
+                              className="flex items-center gap-2"
+                            >
+                              <Checkbox
                                 value={option.value}
-                              >
-                                {option.title}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                                checked={
+                                  isArray(field.value)
+                                    ? field.value.includes(option.value)
+                                    : field.value === option.value
+                                }
+                                onCheckedChange={(checked) => {
+                                  field.onChange(checked);
+                                }}
+                              />
+                              <Label>{option.title}</Label>
+                            </div>
+                          ))}
+                        </div>
                       ) : (
-                        <Input
-                          {...(field as any)}
-                          type={item.type || "text"}
-                          placeholder={item.placeholder}
-                          className="bg-background rounded-md placeholder:text-base-content/50"
-                          {...item.attributes}
-                        />
+                        <Input field={item} formField={field} data={data} />
                       )}
                     </FormControl>
                     {item.tip && (
@@ -236,10 +229,13 @@ export function Form({
               <Loader className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               submit.button.icon && (
-                <Icon name={submit.button.icon as string} className="size-4" />
+                <SmartIcon
+                  name={submit.button.icon as string}
+                  className="size-4"
+                />
               )
             )}
-            {submit.button.text}
+            {submit.button.title}
           </Button>
         )}
       </form>

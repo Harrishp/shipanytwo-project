@@ -1,4 +1,4 @@
-import { Button } from "@/types/blocks/base";
+import { Button } from "./common";
 
 type ValidationRule = {
   required?: boolean;
@@ -23,7 +23,8 @@ export interface FormField {
     | "code_editor"
     | "richtext_editor"
     | "markdown_editor"
-    | "switch";
+    | "switch"
+    | "checkbox";
   placeholder?: string;
   group?: string;
   options?: {
