@@ -1,9 +1,9 @@
 import { Hero } from "@/blocks/landing/hero";
 import { getTranslations } from "next-intl/server";
 
-export default async function AiChatbotPage() {
+export default async function AiVideoGeneratorPage() {
   const t = await getTranslations("landing");
-  const tt = await getTranslations("demo.ai-chatbot");
+  const tt = await getTranslations("demo.ai-video-generator");
 
   return (
     <>

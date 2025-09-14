@@ -12,9 +12,24 @@
       }
     ]
   },
+  "ai-chatbot": {
+    "title": "AI Chatbot",
+    "description": "Use AI chatbot model to generate chatbot, support chatbot to chatbot and text to chatbot.",
+    "tip": "🎁 50% off for first month"
+  },
   "ai-image-generator": {
     "title": "AI Image Generator",
     "description": "Use AI image model to generate images, support image to image and text to image.",
+    "tip": "🎁 50% off for first month"
+  },
+  "ai-video-generator": {
+    "title": "AI Video Generator",
+    "description": "Use AI video model to generate videos, support video to video and text to video.",
+    "tip": "🎁 50% off for first month"
+  },
+  "ai-audio-generator": {
+    "title": "AI Audio Generator",
+    "description": "Use AI audio model to generate audio, support audio to audio and text to audio.",
     "tip": "🎁 50% off for first month"
   }
 }
