@@ -12,36 +12,38 @@ import { Configs, getAllConfigs } from "@/shared/services/config";
 export function getPaymentService(configs: Configs) {
   const paymentManager = new PaymentManager();
 
-  const paymentProvider = configs.payment_provider;
-
+  const defaultProvider = configs.payment_provider;
   // add stripe provider
-  if (paymentProvider === "stripe") {
+  if (configs.stripe_secret_key && configs.stripe_publishable_key) {
     paymentManager.addProvider(
       new StripeProvider({
         secretKey: configs.stripe_secret_key,
         publishableKey: configs.stripe_publishable_key,
-      })
+      }),
+      defaultProvider === "stripe"
     );
   }
 
   // add creem provider
-  if (paymentProvider === "creem") {
+  if (configs.creem_api_key) {
     paymentManager.addProvider(
       new CreemProvider({
         apiKey: configs.creem_api_key,
         environment: "sandbox",
-      })
+      }),
+      defaultProvider === "creem"
     );
   }
 
   // add paypal provider
-  if (paymentProvider === "paypal") {
+  if (configs.paypal_client_id && configs.paypal_client_secret) {
     paymentManager.addProvider(
       new PayPalProvider({
         clientId: configs.paypal_client_id,
         clientSecret: configs.paypal_client_secret,
         environment: "sandbox",
-      })
+      }),
+      defaultProvider === "paypal"
     );
   }
 

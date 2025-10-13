@@ -36,23 +36,8 @@ export default async function BlogPage({
   // load blog data
   const t = await getTranslations("blog");
 
-  const { page: pageNum, pageSize } = await searchParams;
-  const page = pageNum || 1;
-  const limit = pageSize || 30;
-
-  // get blog posts
-  const postsData = await getPosts({
-    type: DBPostType.ARTICLE,
-    status: PostStatus.PUBLISHED,
-    page,
-    limit,
-  });
-
-  // get blog categories
-  const categoriesData = await getTaxonomies({
-    type: TaxonomyType.CATEGORY,
-    status: TaxonomyStatus.PUBLISHED,
-  });
+  let posts: PostType[] = [];
+  let categories: CategoryType[] = [];
 
   // current category data
   const currentCategory: CategoryType = {
@@ -62,26 +47,50 @@ export default async function BlogPage({
     url: `/blog`,
   };
 
-  // build categoties data
-  const categories: CategoryType[] = categoriesData.map((category) => ({
-    id: category.id,
-    slug: category.slug,
-    title: category.title,
-    url: `/blog/category/${category.slug}`,
-  }));
-  categories.unshift(currentCategory);
+  try {
+    // todo: get posts from content dir
 
-  // build posts data
-  const posts: PostType[] = postsData.map((post) => ({
-    id: post.id,
-    title: post.title || "",
-    description: post.description || "",
-    author_name: post.authorName || "",
-    author_image: post.authorImage || "",
-    created_at: moment(post.createdAt).format("MMM D, YYYY") || "",
-    image: post.image || "",
-    url: `/blog/${post.slug}`,
-  }));
+    const { page: pageNum, pageSize } = await searchParams;
+    const page = pageNum || 1;
+    const limit = pageSize || 30;
+
+    // get blog posts
+    const postsData = await getPosts({
+      type: DBPostType.ARTICLE,
+      status: PostStatus.PUBLISHED,
+      page,
+      limit,
+    });
+
+    // get blog categories
+    const categoriesData = await getTaxonomies({
+      type: TaxonomyType.CATEGORY,
+      status: TaxonomyStatus.PUBLISHED,
+    });
+
+    // build categoties data
+    categories = categoriesData.map((category) => ({
+      id: category.id,
+      slug: category.slug,
+      title: category.title,
+      url: `/blog/category/${category.slug}`,
+    }));
+    categories.unshift(currentCategory);
+
+    // build posts data
+    posts = postsData.map((post) => ({
+      id: post.id,
+      title: post.title || "",
+      description: post.description || "",
+      author_name: post.authorName || "",
+      author_image: post.authorImage || "",
+      created_at: moment(post.createdAt).format("MMM D, YYYY") || "",
+      image: post.image || "",
+      url: `/blog/${post.slug}`,
+    }));
+  } catch (error) {
+    console.log("getting posts failed:", error);
+  }
 
   // build blog data
   const blog: BlogType = {

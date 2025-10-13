@@ -124,27 +124,41 @@ export default async function BillingPage({
     <div className="space-y-8">
       <PanelCard
         title={t("view.title")}
-        buttons={[
-          {
-            title: t("view.buttons.adjust"),
-            url: "/pricing",
-            target: "_blank",
-            icon: "Pencil",
-            size: "sm",
-          },
-        ]}
+        buttons={
+          currentSubscription
+            ? [
+                {
+                  title: t("view.buttons.adjust"),
+                  url: "/pricing",
+                  target: "_blank",
+                  icon: "Pencil",
+                  size: "sm",
+                },
+              ]
+            : [
+                {
+                  title: t("view.buttons.subscribe"),
+                  url: "/pricing",
+                  target: "_blank",
+                  icon: "ArrowUpRight",
+                  size: "sm",
+                },
+              ]
+        }
         className="max-w-md"
       >
         <div className="text-3xl font-bold text-primary">
-          {currentSubscription?.planName}
+          {currentSubscription?.planName || t("view.no_subscription")}
         </div>
-        <div className="text-sm font-normal text-muted-foreground mt-4">
-          {t("view.tip", {
-            date: moment(currentSubscription?.currentPeriodEnd).format(
-              "YYYY-MM-DD"
-            ),
-          })}
-        </div>
+        {currentSubscription ? (
+          <div className="text-sm font-normal text-muted-foreground mt-4">
+            {t("view.tip", {
+              date: moment(currentSubscription?.currentPeriodEnd).format(
+                "YYYY-MM-DD"
+              ),
+            })}
+          </div>
+        ) : null}
       </PanelCard>
       <TableCard title={t("list.title")} tabs={tabs} table={table} />
     </div>

@@ -103,22 +103,21 @@ export async function POST(req: Request) {
           : `${envConfigs.app_url}/pricing`,
     };
 
+    // checkout with predefined product
     if (paymentProductId) {
-      // checkout with predefined product
       checkoutInfo.productId = paymentProductId;
-    } else {
-      checkoutInfo.price = checkoutPrice;
+    }
 
-      // checkout dynamically
-      if (paymentType === PaymentType.SUBSCRIPTION) {
-        // subscription mode
-        checkoutInfo.plan = {
-          interval: paymentInterval,
-          name: pricingItem.product_name,
-        };
-      } else {
-        // one-time mode
-      }
+    // checkout dynamically
+    checkoutInfo.price = checkoutPrice;
+    if (paymentType === PaymentType.SUBSCRIPTION) {
+      // subscription mode
+      checkoutInfo.plan = {
+        interval: paymentInterval,
+        name: pricingItem.product_name,
+      };
+    } else {
+      // one-time mode
     }
 
     const currentTime = new Date();

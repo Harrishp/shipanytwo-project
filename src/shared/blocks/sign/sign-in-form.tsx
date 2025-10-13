@@ -86,7 +86,7 @@ export function SignInForm({
   };
 
   return (
-    <div className={`w-full md:max-w-md px-4 md:px-8 ${className}`}>
+    <div className={`w-full md:max-w-md ${className}`}>
       <div className="grid gap-4">
         {isEmailAuthEnabled && (
           <>

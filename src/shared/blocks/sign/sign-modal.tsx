@@ -27,8 +27,8 @@ export function SignModal() {
   const t = useTranslations("common.sign");
   const { isShowSignModal, setIsShowSignModal } = useAppContext();
 
-  const callbackURL =
-    typeof window !== "undefined" ? window.location.href : "/";
+  // todo: dynamic set callbackURL
+  const callbackURL = "/";
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
 

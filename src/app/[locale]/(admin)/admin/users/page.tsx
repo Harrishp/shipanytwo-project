@@ -1,12 +1,18 @@
 import { Header, Main, MainHeader } from "@/shared/blocks/dashboard";
 import { TableCard } from "@/shared/blocks/table";
 import { type Table } from "@/shared/types/blocks/table";
-import { getUsers } from "@/shared/services/user";
+import { getUserInfo, getUsers } from "@/shared/services/user";
 import { getTranslations } from "next-intl/server";
 import { Crumb } from "@/shared/types/blocks/common";
+import { Empty } from "@/shared/blocks/common";
 
 export default async function AdminUsersPage() {
   const t = await getTranslations("admin.users");
+
+  const user = await getUserInfo();
+  if (!user) {
+    return <Empty message="no auth" />;
+  }
 
   const users = await getUsers();
 

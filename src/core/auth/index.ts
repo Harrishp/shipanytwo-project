@@ -1,11 +1,15 @@
 import { betterAuth } from "better-auth";
-import { authOptions, getSocialProviders } from "./config";
+import { authOptions, getAuthOptions } from "./config";
 
-// auth with social providers
+// static auth
 export const auth = betterAuth({
   ...authOptions,
   emailAndPassword: {
     enabled: true,
   },
-  socialProviders: await getSocialProviders(),
 });
+
+// dynamic auth
+export async function getAuth() {
+  return betterAuth(await getAuthOptions());
+}

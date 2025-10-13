@@ -7,7 +7,7 @@ export const localeNames: any = {
 
 export const locales = ["en", "zh"];
 
-export const defaultLocale = envConfigs.default_locale;
+export const defaultLocale = envConfigs.locale;
 
 export const localePrefix = "as-needed";
 

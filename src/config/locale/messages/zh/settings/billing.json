@@ -13,8 +13,10 @@
   "view": {
     "title": "当前计划",
     "tip": "你的订阅将在 {date} 自动续费",
+    "no_subscription": "未订阅",
     "buttons": {
-      "adjust": "调整计划"
+      "adjust": "调整计划",
+      "subscribe": "去订阅"
     }
   },
   "list": {

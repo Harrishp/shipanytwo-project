@@ -1,29 +1,42 @@
-import { getConfigs } from "@/shared/services/config";
+import { getAllConfigs } from "@/shared/services/config";
 import { envConfigs } from "@/config";
 import { getUuid } from "@/shared/lib/hash";
 import { db } from "@/core/db";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "@/config/db/schema";
 
-// auth options
+// static auth options
 export const authOptions = {
   appName: envConfigs.app_name,
   baseURL: envConfigs.auth_url,
   secret: envConfigs.auth_secret,
-  database: drizzleAdapter(db(), {
-    provider: getDatabaseProvider(envConfigs.database_provider),
-    schema: schema,
-  }),
-  advanced: {
-    database: {
-      generateId: () => getUuid(),
-    },
-  },
 };
 
-export async function getSocialProviders() {
+// get dynamic auth options
+export async function getAuthOptions() {
+  const configs = await getAllConfigs();
+  return {
+    ...authOptions,
+    database: envConfigs.database_url
+      ? drizzleAdapter(db(), {
+          provider: getDatabaseProvider(envConfigs.database_provider),
+          schema: schema,
+        })
+      : null,
+    advanced: {
+      database: {
+        generateId: () => getUuid(),
+      },
+    },
+    emailAndPassword: {
+      enabled: configs.email_auth_enabled !== "false",
+    },
+    socialProviders: await getSocialProviders(configs),
+  };
+}
+
+export async function getSocialProviders(configs: Record<string, string>) {
   // get configs from db
-  const configs = await getConfigs();
   const providers: any = {};
 
   if (configs.google_client_id && configs.google_client_secret) {

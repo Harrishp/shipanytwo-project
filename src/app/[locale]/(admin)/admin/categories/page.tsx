@@ -10,6 +10,8 @@ import {
   type Taxonomy,
 } from "@/shared/services/taxonomy";
 import { getTranslations } from "next-intl/server";
+import { getUserInfo } from "@/shared/services/user";
+import { Empty } from "@/shared/blocks/common";
 
 export default async function CategoriesPage({
   searchParams,
@@ -17,6 +19,11 @@ export default async function CategoriesPage({
   searchParams: Promise<{ page?: number; pageSize?: number }>;
 }) {
   const t = await getTranslations("admin.categories");
+
+  const user = await getUserInfo();
+  if (!user) {
+    return <Empty message="no auth" />;
+  }
 
   const { page: pageNum, pageSize } = await searchParams;
   const page = pageNum || 1;

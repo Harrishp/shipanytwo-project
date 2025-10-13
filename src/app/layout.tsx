@@ -6,12 +6,7 @@ import { envConfigs } from "@/config";
 import { getAllConfigs } from "@/shared/services/config";
 import { getAdsComponents } from "@/shared/services/ads";
 import { getAnalyticsComponents } from "@/shared/services/analytics";
-import {
-  Noto_Sans_Mono,
-  Merriweather,
-  JetBrains_Mono,
-  Geist_Mono,
-} from "next/font/google";
+import { Noto_Sans_Mono, Merriweather, JetBrains_Mono } from "next/font/google";
 
 const notoSansMono = Noto_Sans_Mono({
   subsets: ["latin"],
@@ -88,7 +83,7 @@ export default async function RootLayout({
         {/* inject analytics head scripts */}
         {analyticsHeadScripts}
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {children}
 
         {/* inject ads body scripts */}

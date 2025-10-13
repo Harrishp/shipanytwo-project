@@ -33,7 +33,7 @@ export async function generateMetadata({
     description: t("description"),
     alternates: {
       canonical:
-        locale !== envConfigs.default_locale
+        locale !== envConfigs.locale
           ? `${envConfigs.app_url}/${locale}/blog/category/${slug}`
           : `${envConfigs.app_url}/blog/category/${slug}`,
     },

@@ -30,9 +30,13 @@ export default async function PricingPage({
 
   // get current subscription
   let currentSubscription;
-  const user = await getUserInfo();
-  if (user) {
-    currentSubscription = await getCurrentSubscription(user.id);
+  try {
+    const user = await getUserInfo();
+    if (user) {
+      currentSubscription = await getCurrentSubscription(user.id);
+    }
+  } catch (error) {
+    console.log("getting current subscription failed:", error);
   }
 
   // load page component

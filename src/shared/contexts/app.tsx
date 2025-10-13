@@ -1,7 +1,6 @@
 "use client";
 
 import { envConfigs } from "@/config";
-import { useTheme } from "next-themes";
 import {
   ReactNode,
   createContext,
@@ -25,18 +24,16 @@ const AppContext = createContext({} as ContextValue);
 export const useAppContext = () => useContext(AppContext);
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  const { theme, setTheme } = useTheme();
-
   const [configs, setConfigs] = useState<Record<string, string>>({});
 
   // sign user
   const [user, setUser] = useState<User | null>(null);
 
-  // is check sign
-  const [isCheckSign, setIsCheckSign] = useState(false);
-
   // session
   const { data: session, isPending } = useSession();
+
+  // is check sign (true during SSR and initial render to avoid hydration mismatch when auth is enabled)
+  const [isCheckSign, setIsCheckSign] = useState(!!envConfigs.auth_secret);
 
   // show sign modal
   const [isShowSignModal, setIsShowSignModal] = useState(false);
@@ -86,12 +83,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     fetchConfigs();
   }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && !theme) {
-      setTheme(envConfigs.default_theme);
-    }
-  }, [theme, setTheme]);
 
   useEffect(() => {
     if (session && session.user) {

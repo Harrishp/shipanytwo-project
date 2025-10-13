@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
+import { NextRequest, NextResponse } from "next/server";
 import { routing } from "@/core/i18n/config";
 import { betterFetch } from "@better-fetch/fetch";
 import { Session } from "better-auth";

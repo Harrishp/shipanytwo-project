@@ -38,6 +38,7 @@ export function Showcases({
                   <Image
                     src={item.image?.src ?? ""}
                     alt={item.image?.alt ?? ""}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     fill
                     className="object-cover rounded-t-lg transition-transform duration-300 hover:scale-110"
                   />

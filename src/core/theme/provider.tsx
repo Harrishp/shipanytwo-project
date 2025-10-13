@@ -9,7 +9,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const locale = useLocale();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof document !== "undefined" && locale) {
       document.documentElement.lang = locale;
     }
   }, [locale]);
@@ -17,7 +17,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme={envConfigs.default_theme}
+      defaultTheme={envConfigs.appearance}
       enableSystem
       disableTransitionOnChange
     >

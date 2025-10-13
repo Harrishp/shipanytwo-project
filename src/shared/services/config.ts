@@ -1,6 +1,7 @@
 import { db } from "@/core/db";
 import { config } from "@/config/db/schema";
 import { envConfigs } from "@/config";
+import { publicSettingNames } from "./settings";
 
 export type Config = typeof config.$inferSelect;
 export type NewConfig = typeof config.$inferInsert;
@@ -41,6 +42,10 @@ export async function addConfig(newConfig: NewConfig) {
 export async function getConfigs(): Promise<Configs> {
   const configs: Record<string, string> = {};
 
+  if (!envConfigs.database_url) {
+    return configs;
+  }
+
   const result = await db().select().from(config);
   if (!result) {
     return configs;
@@ -69,6 +74,35 @@ export async function getAllConfigs(): Promise<Configs> {
   const configs = {
     ...envConfigs,
     ...dbConfigs,
+  };
+
+  return configs;
+}
+
+export async function getPublicConfigs(): Promise<Configs> {
+  let dbConfigs: Configs = {};
+
+  // only get configs from db in server side
+  if (typeof window === "undefined" && envConfigs.database_url) {
+    try {
+      dbConfigs = await getConfigs();
+    } catch (e) {
+      console.log("get configs from db failed:", e);
+      dbConfigs = {};
+    }
+  }
+
+  const publicConfigs: Record<string, string> = {};
+
+  // get public configs from db
+  for (const key in dbConfigs) {
+    if (publicSettingNames.includes(key)) {
+      publicConfigs[key] = dbConfigs[key];
+    }
+  }
+
+  const configs = {
+    ...publicConfigs,
   };
 
   return configs;

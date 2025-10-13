@@ -13,12 +13,6 @@ import { usePathname, useRouter } from "@/core/i18n/navigation";
 import { Button } from "@/shared/components/ui/button";
 import { useEffect, useState } from "react";
 
-/**
- * Fix hydration issue:
- * - Avoid a mismatch when localeNames[currentLocale] might be rendered differently on server and client.
- * - Only render language selection content on the client (use `mounted` state).
- */
-
 export function LocaleSelector({
   type = "icon",
 }: {
@@ -41,26 +35,26 @@ export function LocaleSelector({
     }
   };
 
+  // Return a placeholder during SSR to avoid hydration mismatch
   if (!mounted) {
-    // Avoid hydration mismatch: just render a placeholder before the client is mounted
     return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          {type === "icon" ? (
-            <Languages size={18} />
-          ) : (
-            <Button
-              variant="outline"
-              size="sm"
-              className="hover:bg-primary/10"
-              aria-label="Locale"
-            >
-              <Globe size={16} />
-              {/* Placeholder, do not render locale name at SSR */}
-            </Button>
-          )}
-        </DropdownMenuTrigger>
-      </DropdownMenu>
+      <Button
+        variant={type === "icon" ? "ghost" : "outline"}
+        size={type === "icon" ? "icon" : "sm"}
+        className={
+          type === "icon" ? "h-auto w-auto p-0" : "hover:bg-primary/10"
+        }
+        disabled
+      >
+        {type === "icon" ? (
+          <Languages size={18} />
+        ) : (
+          <>
+            <Globe size={16} />
+            {localeNames[currentLocale]}
+          </>
+        )}
+      </Button>
     );
   }
 
@@ -68,7 +62,9 @@ export function LocaleSelector({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {type === "icon" ? (
-          <Languages size={18} />
+          <Button variant="ghost" size="icon" className="h-auto w-auto p-0">
+            <Languages size={18} />
+          </Button>
         ) : (
           <Button variant="outline" size="sm" className="hover:bg-primary/10">
             <Globe size={16} />

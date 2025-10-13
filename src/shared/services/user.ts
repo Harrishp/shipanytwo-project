@@ -2,8 +2,10 @@ import { user } from "@/config/db/schema";
 import { db } from "@/core/db";
 import { desc, eq, inArray } from "drizzle-orm";
 import { headers } from "next/headers";
-import { auth } from "@/core/auth";
+import { getAuth } from "@/core/auth";
 import { getRemainingCredits } from "./credit";
+import { envConfigs } from "@/config";
+import { getAuthOptions } from "@/core/auth/config";
 
 export interface UserCredits {
   remainingCredits: number;
@@ -65,6 +67,7 @@ export async function getUserCredits(userId: string) {
 }
 
 export async function getSignUser() {
+  const auth = await getAuth();
   const session = await auth.api.getSession({
     headers: await headers(),
   });

@@ -55,3 +55,6 @@ wrangler.toml
 
 .source
 src/config/db/migrations
+
+.debug 
+.test

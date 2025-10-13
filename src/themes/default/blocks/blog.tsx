@@ -47,7 +47,7 @@ export function Blog({
       </div>
 
       <div className="container flex flex-col items-center gap-8 lg:px-16">
-        {blog.categories && (
+        {blog.categories && blog.categories.length > 0 && (
           <div className="mb-2 flex flex-wrap items-center justify-center gap-4">
             <Tabs tabs={tabs} />
           </div>
