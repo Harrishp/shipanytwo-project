@@ -11,6 +11,24 @@ export const authOptions = {
   baseURL: envConfigs.auth_url,
   secret: envConfigs.auth_secret,
   trustedOrigins: envConfigs.app_url ? [envConfigs.app_url] : [],
+  database: envConfigs.database_url
+    ? drizzleAdapter(db(), {
+        provider: getDatabaseProvider(envConfigs.database_provider),
+        schema: schema,
+      })
+    : null,
+  advanced: {
+    database: {
+      generateId: () => getUuid(),
+    },
+  },
+  emailAndPassword: {
+    enabled: true,
+  },
+  logger: {
+    verboseLogging: false,
+    disabled: process.env.NODE_ENV === "production" || !!process.env.NEXT_PHASE,
+  },
 };
 
 // get dynamic auth options
@@ -18,17 +36,6 @@ export async function getAuthOptions() {
   const configs = await getAllConfigs();
   return {
     ...authOptions,
-    database: envConfigs.database_url
-      ? drizzleAdapter(db(), {
-          provider: getDatabaseProvider(envConfigs.database_provider),
-          schema: schema,
-        })
-      : null,
-    advanced: {
-      database: {
-        generateId: () => getUuid(),
-      },
-    },
     emailAndPassword: {
       enabled: configs.email_auth_enabled !== "false",
     },
