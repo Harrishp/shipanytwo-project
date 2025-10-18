@@ -62,18 +62,50 @@ export default async function PaymentsPage({
       {
         title: t("fields.paid_amount"),
         callback: function (item) {
+          const currency = (item.paymentCurrency || "USD").toUpperCase();
+
+          let prefix = "";
+          if (currency === "USD") {
+            prefix = `$`;
+          } else if (currency === "CNY") {
+            prefix = `¥`;
+          } else {
+            prefix = `${currency} `;
+          }
+
           return (
-            <div className="text-primary">{`${item.paymentAmount / 100} ${
-              item.paymentCurrency
-            }`}</div>
+            <div className="text-primary">{`${prefix}${item.paymentAmount / 100}`}</div>
           );
         },
-        type: "copy",
       },
       {
         name: "createdAt",
         title: t("fields.created_at"),
         type: "time",
+      },
+      {
+        name: "actions",
+        type: "dropdown",
+        callback: (item: Order) => {
+          if (item.invoiceUrl) {
+            return [
+              {
+                title: t("fields.actions.view_invoice"),
+                url: item.invoiceUrl,
+                target: "_blank",
+                icon: "ArrowUpRight",
+              },
+            ];
+          } else if (item.invoiceId) {
+            return [
+              {
+                title: t("fields.actions.view_invoice"),
+                url: `/settings/invoices/retrieve?order_no=${item.orderNo}`,
+                icon: "ArrowUpRight",
+              },
+            ];
+          }
+        },
       },
     ],
     data: orders,

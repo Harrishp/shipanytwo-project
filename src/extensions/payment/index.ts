@@ -197,6 +197,13 @@ export interface PaymentEvent {
   paymentSession?: PaymentSession;
 }
 
+export interface PaymentInvoice {
+  invoiceId: string;
+  invoiceUrl?: string;
+  amount?: number;
+  currency?: string;
+}
+
 /**
  * Payment configs interface
  */
@@ -226,6 +233,13 @@ export interface PaymentProvider {
 
   // get payment event from webhook notification
   getPaymentEvent({ req }: { req: Request }): Promise<PaymentEvent>;
+
+  // get payment invoice
+  getPaymentInvoice?({
+    invoiceId,
+  }: {
+    invoiceId: string;
+  }): Promise<PaymentInvoice>;
 }
 
 /**

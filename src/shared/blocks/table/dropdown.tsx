@@ -24,6 +24,10 @@ export function Dropdown({
   metadata: Record<string, any>;
   className?: string;
 }) {
+  if (!value || value.length === 0) {
+    return null;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -36,7 +40,7 @@ export function Dropdown({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        {value.map((item) => {
+        {value?.map((item) => {
           return (
             <DropdownMenuItem key={item.title}>
               <Link

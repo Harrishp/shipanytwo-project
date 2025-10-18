@@ -10,7 +10,10 @@
     "provider": "提供商",
     "created_at": "创建时间",
     "status": "状态",
-    "action": "操作"
+    "action": "操作",
+    "actions": {
+      "view_invoice": "查看发票"
+    }
   },
   "list": {
     "title": "支付",

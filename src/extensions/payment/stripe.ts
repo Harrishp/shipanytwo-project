@@ -12,6 +12,7 @@ import {
   SubscriptionInfo,
   CheckoutSession,
   SubscriptionCycleType,
+  PaymentInvoice,
 } from ".";
 
 /**
@@ -114,6 +115,12 @@ export class StripeProvider implements PaymentProvider {
         ],
       };
 
+      if (order.type === PaymentType.ONE_TIME) {
+        sessionParams.invoice_creation = {
+          enabled: true,
+        };
+      }
+
       if (customerId) {
         sessionParams.customer = customerId;
       }
@@ -215,6 +222,28 @@ export class StripeProvider implements PaymentProvider {
         eventType: eventType,
         eventResult: event,
         paymentSession: paymentSession,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getPaymentInvoice({
+    invoiceId,
+  }: {
+    invoiceId: string;
+  }): Promise<PaymentInvoice> {
+    try {
+      const invoice = await this.client.invoices.retrieve(invoiceId);
+      if (!invoice.id) {
+        throw new Error("Invoice not found");
+      }
+
+      return {
+        invoiceId: invoice.id,
+        invoiceUrl: invoice.hosted_invoice_url || undefined,
+        amount: invoice.amount_paid,
+        currency: invoice.currency,
       };
     } catch (error) {
       throw error;

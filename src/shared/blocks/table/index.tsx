@@ -12,7 +12,6 @@ import { Image } from "./image";
 import { Label } from "./label";
 import { Time } from "./time";
 import { Copy } from "./copy";
-
 import { type TableColumn } from "@/shared/types/blocks/table";
 import { type Pagination } from "@/shared/types/blocks/common";
 import { Dropdown } from "./dropdown";

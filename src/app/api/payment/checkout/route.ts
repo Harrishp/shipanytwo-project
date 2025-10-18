@@ -1,4 +1,3 @@
-import { envConfigs } from "@/config";
 import { getSnowId, getUuid } from "@/shared/lib/hash";
 import { respData, respErr } from "@/shared/lib/resp";
 import {
@@ -97,6 +96,16 @@ export async function POST(req: Request) {
       }
     }
 
+    let callbackBaseUrl = `${configs.app_url}`;
+    if (locale && locale !== configs.default_locale) {
+      callbackBaseUrl += `/${locale}`;
+    }
+
+    const callbackUrl =
+      paymentType === PaymentType.SUBSCRIPTION
+        ? `${callbackBaseUrl}/settings/billing`
+        : `${callbackBaseUrl}/settings/payments`;
+
     // build checkout order
     const checkoutOrder: PaymentOrder = {
       description: pricingItem.product_name,
@@ -106,15 +115,12 @@ export async function POST(req: Request) {
       },
       type: paymentType,
       metadata: {
-        app_name: envConfigs.app_name,
+        app_name: configs.app_name,
         order_no: orderNo,
         user_id: user.id,
       },
-      successUrl: `${envConfigs.app_url}/api/payment/callback?order_no=${orderNo}`,
-      cancelUrl:
-        locale && locale !== configs.default_locale
-          ? `${envConfigs.app_url}/${locale}/pricing`
-          : `${envConfigs.app_url}/pricing`,
+      successUrl: `${configs.app_url}/api/payment/callback?order_no=${orderNo}`,
+      cancelUrl: `${callbackBaseUrl}/pricing`,
     };
 
     // checkout with predefined product
@@ -135,11 +141,6 @@ export async function POST(req: Request) {
     }
 
     const currentTime = new Date();
-
-    const callbackUrl =
-      paymentType === PaymentType.SUBSCRIPTION
-        ? `${envConfigs.app_url}/settings/billing`
-        : `${envConfigs.app_url}/settings/payments`;
 
     // build order info
     const order: NewOrder = {
