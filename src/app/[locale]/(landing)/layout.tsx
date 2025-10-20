@@ -5,6 +5,7 @@ import {
   Header as HeaderType,
   Footer as FooterType,
 } from "@/shared/types/blocks/landing";
+import { LocaleDetector } from "@/shared/blocks/common";
 
 export default async function LandingLayout({
   children,
@@ -23,6 +24,7 @@ export default async function LandingLayout({
 
   return (
     <Layout header={header} footer={footer}>
+      <LocaleDetector />
       {children}
     </Layout>
   );

@@ -4,9 +4,10 @@ export * from "./pagination";
 
 export * from "./brand-logo";
 
+export * from "./locale-detector";
 export * from "./locale-selector";
+
 export * from "./theme-toggler";
-export * from "../sign/sign-user";
 
 export * from "./social-avatars";
 
@@ -20,3 +21,5 @@ export * from "./empty";
 
 export * from "./markdown-preview";
 export * from "./markdown-editor";
+
+export * from "../sign/sign-user";

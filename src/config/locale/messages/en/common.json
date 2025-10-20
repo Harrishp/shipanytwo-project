@@ -32,5 +32,9 @@
     "choose_payment_method": "Choose Payment Method",
     "choose_payment_method_description": "",
     "cancel_title": "Cancel"
+  },
+  "locale_detector": {
+    "title": "We detected your browser language is {locale}. Switch to it?",
+    "switch_to": "Switch to {locale}"
   }
 }

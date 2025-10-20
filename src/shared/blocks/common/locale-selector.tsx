@@ -29,6 +29,8 @@ export function LocaleSelector({
 
   const handleSwitchLanguage = (value: string) => {
     if (value !== currentLocale) {
+      // Update localStorage to sync with locale detector
+      localStorage.setItem("locale", value);
       router.push(pathname, {
         locale: value,
       });
