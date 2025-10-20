@@ -1,9 +1,10 @@
-import { ReactNode } from "react";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { DashboardLayout } from "@/shared/blocks/dashboard/layout";
-import { Sidebar as SidebarType } from "@/shared/types/blocks/dashboard";
-import { requireAdminAccess } from "@/core/rbac/permission";
-import { LocaleDetector } from "@/shared/blocks/common";
+import { ReactNode } from 'react';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+
+import { requireAdminAccess } from '@/core/rbac/permission';
+import { LocaleDetector } from '@/shared/blocks/common';
+import { DashboardLayout } from '@/shared/blocks/dashboard/layout';
+import { Sidebar as SidebarType } from '@/shared/types/blocks/dashboard';
 
 /**
  * Admin layout to manage datas
@@ -21,12 +22,12 @@ export default async function AdminLayout({
   // Check if user has admin access permission
   await requireAdminAccess({
     redirectUrl: `/no-permission`,
-    locale: locale || "",
+    locale: locale || '',
   });
 
-  const t = await getTranslations("admin");
+  const t = await getTranslations('admin');
 
-  const sidebar: SidebarType = t.raw("sidebar");
+  const sidebar: SidebarType = t.raw('sidebar');
 
   return (
     <DashboardLayout sidebar={sidebar}>
