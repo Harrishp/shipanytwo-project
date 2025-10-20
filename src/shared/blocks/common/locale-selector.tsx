@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu';
+import { cacheSet } from '@/shared/lib/cache';
 
 export function LocaleSelector({
   type = 'icon',
@@ -31,7 +32,7 @@ export function LocaleSelector({
   const handleSwitchLanguage = (value: string) => {
     if (value !== currentLocale) {
       // Update localStorage to sync with locale detector
-      localStorage.setItem('locale', value);
+      cacheSet('locale', value);
       router.push(pathname, {
         locale: value,
       });
