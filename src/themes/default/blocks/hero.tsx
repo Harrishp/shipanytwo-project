@@ -138,7 +138,7 @@ export function Hero({
           )}
 
           {section.show_avatars && (
-            <motion.div {...createFadeInVariant(0.75)}>
+            <motion.div {...createFadeInVariant(0.7)}>
               <SocialAvatars tip={section.avatars_tip || ''} />
             </motion.div>
           )}
@@ -157,10 +157,15 @@ export function Hero({
                   className="border-border/25 relative z-2 hidden w-full border dark:block"
                   src={section.image_invert?.src || section.image?.src || ''}
                   alt={section.image_invert?.alt || section.image?.alt || ''}
-                  width={1200}
-                  height={630}
-                  sizes="(max-width: 768px) 100vw, 1200px"
+                  width={
+                    section.image_invert?.width || section.image?.width || 1200
+                  }
+                  height={
+                    section.image_invert?.height || section.image?.height || 630
+                  }
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
                   priority
+                  quality={70}
                 />
               )}
               {(section.image?.src || section.image_invert?.src) && (
@@ -168,10 +173,15 @@ export function Hero({
                   className="border-border/25 relative z-2 block w-full border dark:hidden"
                   src={section.image?.src || section.image_invert?.src || ''}
                   alt={section.image?.alt || section.image_invert?.alt || ''}
-                  width={1200}
-                  height={630}
-                  sizes="(max-width: 768px) 100vw, 1200px"
+                  width={
+                    section.image?.width || section.image_invert?.width || 1200
+                  }
+                  height={
+                    section.image?.height || section.image_invert?.height || 630
+                  }
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
                   priority
+                  quality={70}
                 />
               )}
             </div>
@@ -188,6 +198,8 @@ export function Hero({
             className="object-cover opacity-60 blur-[0px]"
             fill
             priority
+            sizes="100vw"
+            quality={70}
           />
         </div>
       ) : section.show_bg !== false ? (
