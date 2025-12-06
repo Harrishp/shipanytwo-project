@@ -56,9 +56,9 @@ export function Hero({
         </Link>
       )}
 
-      <div className="relative mx-auto max-w-5xl px-4 text-center">
+      <div className="relative mx-auto max-w-full px-4 text-center md:max-w-5xl">
         {texts && texts.length > 0 ? (
-          <h1 className="text-foreground text-5xl font-semibold text-balance sm:mt-12 sm:text-6xl">
+          <h1 className="text-foreground text-4xl font-semibold text-balance sm:mt-12 sm:text-6xl">
             {texts[0]}
             <Highlighter action="underline" color="#FF9800">
               {highlightText}
@@ -66,7 +66,7 @@ export function Hero({
             {texts[1]}
           </h1>
         ) : (
-          <h1 className="text-foreground text-5xl font-semibold text-balance sm:mt-12 sm:text-6xl">
+          <h1 className="text-foreground text-4xl font-semibold text-balance sm:mt-12 sm:text-6xl">
             {section.title}
           </h1>
         )}
