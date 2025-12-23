@@ -17,6 +17,32 @@ export default async function LandingPage({
 
   // get page data
   const page: DynamicPage = t.raw('page');
+  const t = await getTranslations('landing');
+
+  const showSections = [
+    'hero',
+
+    'introduce',
+    'benefits',
+    'usage',
+    'features',
+    'stats',
+    'testimonials',
+    'subscribe',
+    'faq',
+    'cta',
+  ];
+
+  // build page sections
+  const page: DynamicPage = {
+    sections: showSections.reduce<Record<string, Section>>((acc, section) => {
+      const sectionData = t.raw(section) as Section;
+      if (sectionData) {
+        acc[section] = sectionData;
+      }
+      return acc;
+    }, {}),
+  };
 
   // load page component
   const Page = await getThemePage('dynamic-page');

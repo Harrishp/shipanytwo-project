@@ -39,5 +39,9 @@
     "ready_to_generate": "Ready to Generate",
     "ready_for_generating": "Ready for Generating",
     "no_images_generated": "No Images Generated"
+  },
+  "faq": {
+    "title": "FAQ",
+    "description": "FAQ"
   }
 }
