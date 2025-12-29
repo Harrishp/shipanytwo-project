@@ -61,9 +61,7 @@ export function getMetadata(
 
     // image url
     let imageUrl = options.imageUrl || envConfigs.app_preview_image;
-    if (imageUrl.startsWith('http')) {
-      imageUrl = imageUrl;
-    } else {
+    if (!imageUrl.startsWith('http')) {
       imageUrl = `${envConfigs.app_url}${imageUrl}`;
     }
 
@@ -119,7 +117,6 @@ export function getMetadata(
 const defaultMetadataKey = 'common.metadata';
 
 async function getTranslatedMetadata(metadataKey: string, locale: string) {
-  setRequestLocale(locale);
   const t = await getTranslations(metadataKey);
 
   return {
