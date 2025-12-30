@@ -13,32 +13,10 @@ export default async function LandingPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const t = await getTranslations('landing');
+  const t = await getTranslations('pages.index');
 
-  const showSections = [
-    'hero',
-
-    'introduce',
-    'benefits',
-    'usage',
-    'features',
-    'stats',
-    'testimonials',
-    'subscribe',
-    'faq',
-    'cta',
-  ];
-
-  // build page sections
-  const page: DynamicPage = {
-    sections: showSections.reduce<Record<string, Section>>((acc, section) => {
-      const sectionData = t.raw(section) as Section;
-      if (sectionData) {
-        acc[section] = sectionData;
-      }
-      return acc;
-    }, {}),
-  };
+  // get page data
+  const page: DynamicPage = t.raw('page');
 
   // load page component
   const Page = await getThemePage('dynamic-page');
